@@ -16,8 +16,6 @@
 
 #pragma once
 
-#include "config_common.h"
-
 /* RGB matrix configuration can't be fully expressed in JSON as of now */
 #define RGB_MATRIX_LED_COUNT 61
 #define LED_MATRIX_ROWS MATRIX_ROWS
@@ -33,22 +31,5 @@
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #define RGB_MATRIX_KEYPRESSES
 
-/* The effects:                                                        */
-#define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CYCLE_LEFT_RIGHT
-
-#define ENABLE_RGB_MATRIX_SOLID_COLOR
-#define ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN
-#define ENABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT
-#define ENABLE_RGB_MATRIX_BREATHING
-#define ENABLE_RGB_MATRIX_BAND_VAL
-#define ENABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
-#define ENABLE_RGB_MATRIX_CYCLE_PINWHEEL
-#define ENABLE_RGB_MATRIX_CYCLE_SPIRAL
-#define ENABLE_RGB_MATRIX_RAINDROPS
-
-#define ENABLE_RGB_MATRIX_TYPING_HEATMAP
+/* Configure the effects:                                              */
 #define RGB_MATRIX_TYPING_HEATMAP_DECREASE_DELAY_MS 50
-#define ENABLE_RGB_MATRIX_DIGITAL_RAIN
-
-#define ENABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE
-#define ENABLE_RGB_MATRIX_SOLID_MULTISPLASH

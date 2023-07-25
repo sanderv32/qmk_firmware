@@ -38,6 +38,20 @@
     },
     
     "rgb_matrix": {
+        "animations": {
+            "band_val" : true,
+            "breathing" : true,
+            "cycle_left_right" : true,
+            "cycle_pinwheel" : true,
+            "cycle_spiral" : true,
+            "digital_rain" : true,
+            "gradient_left_right" : true,
+            "gradient_up_down" : true,
+            "raindrops" : true,
+            "solid_reactive_simple" : true,
+            "splash" : true,
+            "typing_heatmap" : true,
+        },
         "driver": "SN32F24xB",
         "layout": [
             { "matrix":[0, 0],  "flags":4,  "x":0,   "y":0 },
