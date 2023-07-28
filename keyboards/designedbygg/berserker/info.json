@@ -5,7 +5,7 @@
     "processor": "SN32F248BF",
     "maintainer": "dexter93",
     "bootloader": "sn32-dfu",
-    "debounce": 2,
+    "debounce": 10,
     "build": {
         "debounce_type": "sym_eager_pk",
     },
