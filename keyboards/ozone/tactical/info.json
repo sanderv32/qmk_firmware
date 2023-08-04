@@ -117,6 +117,7 @@
         "animations": {
             "cycle_left_right" : true,
         },
+        "driver": "SN32F24xB",
         "layout": [
             { "matrix": [0,  0], "x":   0, "y":  0, "flags": 4},
             { "matrix": [0,  1], "x":  16, "y":  0, "flags": 4},
