@@ -18,3 +18,7 @@
 
 // RGB Matrix Config
 #define RGB_MATRIX_LED_COUNT 89
+
+// Fix for backlight turning on when pressing keys
+// https://github.com/SonixQMK/qmk_firmware/issues/348#issuecomment-1670269459
+#define MATRIX_UNSELECT_DRIVE_HIGH
