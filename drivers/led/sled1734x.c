@@ -25,86 +25,86 @@
 // 0b1110111 (0x77) AD <-> VCC
 // 0b1110101 (0x75) AD <-> SCL
 // 0b1110110 (0x76) AD <-> SDA
-#define SLED_ADDR_DEFAULT 0x74
+#define SLED1734X_ADDR_DEFAULT 0x74
 
 /* Function Registers Declarations */
-#define SLED_REG_CONFIG 0x00 // Configuration register
+#define SLED1734X_REG_CONFIG 0x00 // Configuration register
 // Sync Mode
 // 00 - High Impedance, 01 Master, 10 Slave
-#define SLED_REG_CONFIG_SYNC 0x00
+#define SLED1734X_REG_CONFIG_SYNC 0x00
 
-#define SLED_REG_PICTUREDISPLAY 0x01 // Picture Display register
+#define SLED1734X_REG_PICTUREDISPLAY 0x01 // Picture Display register
 // Matrix Type
 // 00 - Type-1, 01 Type-2, 10 Type-3, 11 Type-4
-#define SLED_REG_PICTUREDISPLAY_MATRIXTYPE 0x10
+#define SLED1734X_REG_PICTUREDISPLAY_MATRIXTYPE 0x10
 
-#define SLED_REG_DISPLAYOPTION 0x05 // Display Option register
+#define SLED1734X_REG_DISPLAYOPTION 0x05 // Display Option register
 // Blink Frame and Enable. Default to Disabled
-#define SLED_REG_DISPLAYOPTION_BLINKFRAME 0x00
+#define SLED1734X_REG_DISPLAYOPTION_BLINKFRAME 0x00
 
-#define SLED_REG_AUDIOSYNC 0x06 // Audio Sync register
+#define SLED1734X_REG_AUDIOSYNC 0x06 // Audio Sync register
 // Audio Sync Enable. Default to Disabled
-#define SLED_REG_AUDIOSYNC_ENABLE 0x00
+#define SLED1734X_REG_AUDIOSYNC_ENABLE 0x00
 
-#define SLED_REG_BREATHCONTROL1 0x08 // Breath Control 1 register
+#define SLED1734X_REG_BREATHCONTROL1 0x08 // Breath Control 1 register
 // Fade Out and Fade In Time setting. Default to 0
-#define SLED_REG_BREATHCONTROL_FADE 0x00
+#define SLED1734X_REG_BREATHCONTROL_FADE 0x00
 
-#define SLED_REG_BREATHCONTROL2 0x09 // Breath Control 2 register
+#define SLED1734X_REG_BREATHCONTROL2 0x09 // Breath Control 2 register
 // Breathe and Continuous Breathe Enable. Default to Disabled
-#define SLED_REG_BREATHCONTROL_BREATHE 0x00
+#define SLED1734X_REG_BREATHCONTROL_BREATHE 0x00
 
-#define SLED_REG_SHUTDOWN 0x0A // Shutdown register
+#define SLED1734X_REG_SHUTDOWN 0x0A // Shutdown register
 // 0 - SW Shutdown Mode, 1 Normal Mode
-#define SLED_REG_SHUTDOWN_MODE 0x00
-#define SLED_REG_NORMAL_MODE 0x01
+#define SLED1734X_REG_SHUTDOWN_MODE 0x00
+#define SLED1734X_REG_NORMAL_MODE 0x01
 
-#define SLED_REG_AGC 0x0B // AGC Control register
+#define SLED1734X_REG_AGC 0x0B // AGC Control register
 // Audio Gain Control. Mode, Gain and Enable setting. Default to Disabled
-#define SLED_REG_AGC_MODE 0x00
+#define SLED1734X_REG_AGC_MODE 0x00
 
-#define SLED_REG_STAGGEREDDELAY 0x0D // Staggered Delay register
+#define SLED1734X_REG_STAGGEREDDELAY 0x0D // Staggered Delay register
 // Staggered Delay Timing setting. Default to 0
-#define SLED_REG_STAGGEREDDELAY_TIMING 0x00
+#define SLED1734X_REG_STAGGEREDDELAY_TIMING 0x00
 
-#define SLED_REG_SLEWRATECONTROL 0x0E // Slew Rate Control register
+#define SLED1734X_REG_SLEWRATECONTROL 0x0E // Slew Rate Control register
 // Slew Rate Control Enable. Default to Enabled
-#define SLED_REG_SLEWRATECONTROL_ENABLE 0x01
+#define SLED1734X_REG_SLEWRATECONTROL_ENABLE 0x01
 
-#define SLED_REG_CURRENTCONTROL 0x0F // Current Control register
+#define SLED1734X_REG_CURRENTCONTROL 0x0F // Current Control register
 // Current Control Enable. Default to Disabled
-#define SLED_REG_CURRENTCONTROL_ENABLE 0xB0
+#define SLED1734X_REG_CURRENTCONTROL_ENABLE 0xB0
 
-#define SLED_REG_OPENSHORT1 0x10 // Open Short Test 1 register
+#define SLED1734X_REG_OPENSHORT1 0x10 // Open Short Test 1 register
 // Open Short Detection Mode. Default to Disabled
-#define SLED_REG_OPENSHORT1_MODE 0x00
+#define SLED1734X_REG_OPENSHORT1_MODE 0x00
 
-#define SLED_REG_OPENSHORT2 0x11 // Open Short Test 2 register
+#define SLED1734X_REG_OPENSHORT2 0x11 // Open Short Test 2 register
 // Open Short Detection Interrupt. Default to Disabled
-#define SLED_REG_OPENSHORT2_MODE 0x00
+#define SLED1734X_REG_OPENSHORT2_MODE 0x00
 
-#define SLED_REG_VAF1 0x14 // VAF 1 register
+#define SLED1734X_REG_VAF1 0x14 // VAF 1 register
 // VAF fine tune setting. Default to 0x44
-#define SLED_REG_VAF1_TUNE 0x44
+#define SLED1734X_REG_VAF1_TUNE 0x44
 
-#define SLED_REG_VAF2 0x15 // VAF 2 register
+#define SLED1734X_REG_VAF2 0x15 // VAF 2 register
 // VAF control setting. Default to 0x04
-#define SLED_REG_VAF2_MODE 0x04
+#define SLED1734X_REG_VAF2_MODE 0x04
 
 /* Configure Command Registers Declarations */
-#define SLED_COMMANDREGISTER 0xFD
-#define SLED_PAGE_FRAME_1 0x00
-#define SLED_PAGE_FRAME_2 0x01
-#define SLED_PAGE_FUNCTION 0x0B
-#define SLED_PAGE_DETECTION 0x0C
-#define SLED_PAGE_LEDVAF 0x0D
+#define SLED1734X_COMMANDREGISTER 0xFD
+#define SLED1734X_PAGE_FRAME_1 0x00
+#define SLED1734X_PAGE_FRAME_2 0x01
+#define SLED1734X_PAGE_FUNCTION 0x0B
+#define SLED1734X_PAGE_DETECTION 0x0C
+#define SLED1734X_PAGE_LEDVAF 0x0D
 
-#ifndef SLED_TIMEOUT
-#    define SLED_TIMEOUT 100
+#ifndef SLED1734X_TIMEOUT
+#    define SLED1734X_TIMEOUT 100
 #endif
 
-#ifndef SLED_PERSISTENCE
-#    define SLED_PERSISTENCE 0
+#ifndef SLED1734X_PERSISTENCE
+#    define SLED1734X_PERSISTENCE 0
 #endif
 
 // Transfer buffer for TWITransmitData()
@@ -149,28 +149,28 @@ void sled1734x_write_register(uint8_t addr, uint8_t reg, uint8_t data) {
     g_twi_transfer_buffer[0] = reg;
     g_twi_transfer_buffer[1] = data;
 
-#if SLED_PERSISTENCE > 0
-    for (uint8_t i = 0; i < SLED_PERSISTENCE; i++) {
-        if (i2c_transmit(addr << 1, g_twi_transfer_buffer, 2, SLED_TIMEOUT) == 0) break;
+#if SLED1734X_PERSISTENCE > 0
+    for (uint8_t i = 0; i < SLED1734X_PERSISTENCE; i++) {
+        if (i2c_transmit(addr << 1, g_twi_transfer_buffer, 2, SLED1734X_TIMEOUT) == 0) break;
     }
 #else
-    i2c_transmit(addr << 1, g_twi_transfer_buffer, 2, SLED_TIMEOUT);
+    i2c_transmit(addr << 1, g_twi_transfer_buffer, 2, SLED1734X_TIMEOUT);
 #endif
 }
 
 bool sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer) {
     uint8_t page_frame_select[2];
-    page_frame_select[0] = SLED_COMMANDREGISTER;
+    page_frame_select[0] = SLED1734X_COMMANDREGISTER;
     // select the first frame
-    page_frame_select[1] = SLED_PAGE_FRAME_1;
-    i2c_transmit(addr << 1, page_frame_select, 2, SLED_TIMEOUT);
+    page_frame_select[1] = SLED1734X_PAGE_FRAME_1;
+    i2c_transmit(addr << 1, page_frame_select, 2, SLED1734X_TIMEOUT);
     // transmit PWM registers in 2 transfers of 64 bytes
     // g_twi_transfer_buffer[] is 65 bytes
 
     // iterate over the pwm_buffer contents at 64 byte intervals
-    for (int i = 0; i < SLED_FRAME_OFFSET; i += 64) {
+    for (int i = 0; i < SLED1734X_FRAME_OFFSET; i += 64) {
         // set the first register, e.g. 0x20, 0x30, 0x40, etc.
-        g_twi_transfer_buffer[0] = SLED_OFFSET + i;
+        g_twi_transfer_buffer[0] = SLED1734X_OFFSET + i;
         // copy the data from i to i+63
         // device will auto-increment register for data after the first byte
         // thus this sets registers 0x20-0x2F, 0x30-0x3F, etc. in one transfer
@@ -178,37 +178,37 @@ bool sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer) {
             g_twi_transfer_buffer[1 + j] = pwm_buffer[i + j];
         }
 
-#if SLED_PERSISTENCE > 0
-        for (uint8_t i = 0; i < SLED_PERSISTENCE; i++) {
-            if (i2c_transmit(addr << 1, g_twi_transfer_buffer, 65, SLED_TIMEOUT) != 0) return false;
+#if SLED1734X_PERSISTENCE > 0
+        for (uint8_t i = 0; i < SLED1734X_PERSISTENCE; i++) {
+            if (i2c_transmit(addr << 1, g_twi_transfer_buffer, 65, SLED1734X_TIMEOUT) != 0) return false;
         }
 #else
-        if (i2c_transmit(addr << 1, g_twi_transfer_buffer, 65, SLED_TIMEOUT) != 0) return false;
+        if (i2c_transmit(addr << 1, g_twi_transfer_buffer, 65, SLED1734X_TIMEOUT) != 0) return false;
 #endif
     }
     // select the second frame
-    page_frame_select[1] = SLED_PAGE_FRAME_2;
-    i2c_transmit(addr << 1, page_frame_select, 2, SLED_TIMEOUT);
+    page_frame_select[1] = SLED1734X_PAGE_FRAME_2;
+    i2c_transmit(addr << 1, page_frame_select, 2, SLED1734X_TIMEOUT);
     // transmit PWM registers in 2 transfers of 64 bytes
     // g_twi_transfer_buffer[] is 65 bytes
 
     // iterate over the pwm_buffer contents at 16 byte intervals
-    for (int i = 0; i < SLED_FRAME_OFFSET; i += 64) {
+    for (int i = 0; i < SLED1734X_FRAME_OFFSET; i += 64) {
         // set the first register, e.g. 0x20, 0x30, 0x40, etc.
-        g_twi_transfer_buffer[0] = SLED_OFFSET + i;
+        g_twi_transfer_buffer[0] = SLED1734X_OFFSET + i;
         // copy the data from i to i+63
         // device will auto-increment register for data after the first byte
         // thus this sets registers 0x20-0x2f, 0x30-0x3f, etc. in one transfer
         for (int j = 0; j < 64; j++) {
-            g_twi_transfer_buffer[1 + j] = pwm_buffer[SLED_FRAME_OFFSET + i + j];
+            g_twi_transfer_buffer[1 + j] = pwm_buffer[SLED1734X_FRAME_OFFSET + i + j];
         }
 
-#if SLED_PERSISTENCE > 0
-        for (uint8_t i = 0; i < SLED_PERSISTENCE; i++) {
-            if (i2c_transmit(addr << 1, g_twi_transfer_buffer, 65, SLED_TIMEOUT) != 0) return false;
+#if SLED1734X_PERSISTENCE > 0
+        for (uint8_t i = 0; i < SLED1734X_PERSISTENCE; i++) {
+            if (i2c_transmit(addr << 1, g_twi_transfer_buffer, 65, SLED1734X_TIMEOUT) != 0) return false;
         }
 #else
-        if (i2c_transmit(addr << 1, g_twi_transfer_buffer, 65, SLED_TIMEOUT) != 0) return false;
+        if (i2c_transmit(addr << 1, g_twi_transfer_buffer, 65, SLED1734X_TIMEOUT) != 0) return false;
 #endif
     }
     return true;
@@ -217,9 +217,9 @@ bool sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer) {
 void sled1734x_init(uint8_t addr) {
     // Toggle the SDB pin HIGH to disable the hardware power down state
     // Not always connected to the MCU, hence optional here.
-#ifdef SLED_SDB_PIN
-    setPinOutput(SLED_SDB_PIN);
-    writePinHigh(SLED_SDB_PIN);
+#ifdef SLED1734X_SDB_PIN
+    setPinOutput(SLED1734X_SDB_PIN);
+    writePinHigh(SLED1734X_SDB_PIN);
 #endif
     // Hardware powerup requires 180us.
     wait_us(180);
@@ -230,30 +230,30 @@ void sled1734x_init(uint8_t addr) {
 
     sled1734x_sw_shutdown(addr);
     // sync mode
-    sled1734x_write_register(addr, SLED_REG_CONFIG, SLED_REG_CONFIG_SYNC);
+    sled1734x_write_register(addr, SLED1734X_REG_CONFIG, SLED1734X_REG_CONFIG_SYNC);
     // matrix type
-    sled1734x_write_register(addr, SLED_REG_PICTUREDISPLAY, SLED_REG_PICTUREDISPLAY_MATRIXTYPE);
+    sled1734x_write_register(addr, SLED1734X_REG_PICTUREDISPLAY, SLED1734X_REG_PICTUREDISPLAY_MATRIXTYPE);
     // blink frame
-    sled1734x_write_register(addr, SLED_REG_DISPLAYOPTION, SLED_REG_DISPLAYOPTION_BLINKFRAME);
+    sled1734x_write_register(addr, SLED1734X_REG_DISPLAYOPTION, SLED1734X_REG_DISPLAYOPTION_BLINKFRAME);
     // audio sync off
-    sled1734x_write_register(addr, SLED_REG_AUDIOSYNC, SLED_REG_AUDIOSYNC_ENABLE);
+    sled1734x_write_register(addr, SLED1734X_REG_AUDIOSYNC, SLED1734X_REG_AUDIOSYNC_ENABLE);
     // breathe control
-    sled1734x_write_register(addr, SLED_REG_BREATHCONTROL1, SLED_REG_BREATHCONTROL_FADE);
-    sled1734x_write_register(addr, SLED_REG_BREATHCONTROL2, SLED_REG_BREATHCONTROL_BREATHE);
+    sled1734x_write_register(addr, SLED1734X_REG_BREATHCONTROL1, SLED1734X_REG_BREATHCONTROL_FADE);
+    sled1734x_write_register(addr, SLED1734X_REG_BREATHCONTROL2, SLED1734X_REG_BREATHCONTROL_BREATHE);
     // audio gain off
-    sled1734x_write_register(addr, SLED_REG_AGC, SLED_REG_AGC_MODE);
+    sled1734x_write_register(addr, SLED1734X_REG_AGC, SLED1734X_REG_AGC_MODE);
     // staggered delay off
-    sled1734x_write_register(addr, SLED_REG_STAGGEREDDELAY, SLED_REG_STAGGEREDDELAY_TIMING);
+    sled1734x_write_register(addr, SLED1734X_REG_STAGGEREDDELAY, SLED1734X_REG_STAGGEREDDELAY_TIMING);
     // slew rate control enable
-    sled1734x_write_register(addr, SLED_REG_SLEWRATECONTROL, SLED_REG_SLEWRATECONTROL_ENABLE);
+    sled1734x_write_register(addr, SLED1734X_REG_SLEWRATECONTROL, SLED1734X_REG_SLEWRATECONTROL_ENABLE);
     // VAF fine tuning
-    sled1734x_write_register(addr, SLED_REG_VAF1, SLED_REG_VAF1_TUNE);
-    sled1734x_write_register(addr, SLED_REG_VAF2, SLED_REG_VAF2_MODE);
+    sled1734x_write_register(addr, SLED1734X_REG_VAF1, SLED1734X_REG_VAF1_TUNE);
+    sled1734x_write_register(addr, SLED1734X_REG_VAF2, SLED1734X_REG_VAF2_MODE);
     // current control
-    sled1734x_write_register(addr, SLED_REG_CURRENTCONTROL, SLED_REG_CURRENTCONTROL_ENABLE);
+    sled1734x_write_register(addr, SLED1734X_REG_CURRENTCONTROL, SLED1734X_REG_CURRENTCONTROL_ENABLE);
 
     // select page frame 1
-    sled1734x_write_register(addr, SLED_COMMANDREGISTER, SLED_PAGE_FRAME_1);
+    sled1734x_write_register(addr, SLED1734X_COMMANDREGISTER, SLED1734X_PAGE_FRAME_1);
 
     // turn off all LEDs in the LED control register
     for (int i = 0x00; i <= 0x0F; i++) {
@@ -271,7 +271,7 @@ void sled1734x_init(uint8_t addr) {
     }
 
     // select page frame 2
-    sled1734x_write_register(addr, SLED_COMMANDREGISTER, SLED_PAGE_FRAME_2);
+    sled1734x_write_register(addr, SLED1734X_COMMANDREGISTER, SLED1734X_PAGE_FRAME_2);
 
     // turn off all LEDs in the LED control register
     for (int i = 0x00; i <= 0x0F; i++) {
@@ -355,12 +355,12 @@ void sled1734x_update_pwm_buffers(uint8_t addr, uint8_t index) {
 void sled1734x_update_led_control_registers(uint8_t addr, uint8_t index) {
     if (g_led_control_registers_update_required[index]) {
         // select the first frame
-        sled1734x_write_register(addr, SLED_COMMANDREGISTER, SLED_PAGE_FRAME_1);
+        sled1734x_write_register(addr, SLED1734X_COMMANDREGISTER, SLED1734X_PAGE_FRAME_1);
         for (int i = 0; i < 16; i++) {
             sled1734x_write_register(addr, i, g_led_control_registers[index][i]);
         }
         // select the second frame
-        sled1734x_write_register(addr, SLED_COMMANDREGISTER, SLED_PAGE_FRAME_2);
+        sled1734x_write_register(addr, SLED1734X_COMMANDREGISTER, SLED1734X_PAGE_FRAME_2);
         for (int i = 0; i < 16; i++) {
             sled1734x_write_register(addr, i, g_led_control_registers[index][i + 16]);
         }
@@ -370,14 +370,14 @@ void sled1734x_update_led_control_registers(uint8_t addr, uint8_t index) {
 
 void sled1734x_sw_return_normal(uint8_t addr) {
     // Select to function page
-    sled1734x_write_register(addr, SLED_COMMANDREGISTER, SLED_PAGE_FUNCTION);
+    sled1734x_write_register(addr, SLED1734X_COMMANDREGISTER, SLED1734X_PAGE_FUNCTION);
     // Setting LED driver to normal mode
-    sled1734x_write_register(addr, SLED_REG_SHUTDOWN, SLED_REG_NORMAL_MODE);
+    sled1734x_write_register(addr, SLED1734X_REG_SHUTDOWN, SLED1734X_REG_NORMAL_MODE);
 }
 
 void sled1734x_sw_shutdown(uint8_t addr) {
     // Select to function page
-    sled1734x_write_register(addr, SLED_COMMANDREGISTER, SLED_PAGE_FUNCTION);
+    sled1734x_write_register(addr, SLED1734X_COMMANDREGISTER, SLED1734X_PAGE_FUNCTION);
     // Setting LED driver to shutdown mode
-    sled1734x_write_register(addr, SLED_REG_SHUTDOWN, SLED_REG_SHUTDOWN_MODE);
+    sled1734x_write_register(addr, SLED1734X_REG_SHUTDOWN, SLED1734X_REG_SHUTDOWN_MODE);
 }
