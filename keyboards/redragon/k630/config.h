@@ -18,7 +18,7 @@
 
 /* RGB matrix configuration can't be fully expressed in JSON as of now */
 #define RGB_MATRIX_LED_COUNT 61
-#define RGB_MATRIX_ROW_PINS { C4, C5, C6, C7, C8, C9, C10, C11, C12, B6, B7, B8, B9, B10, B11 }
+#define SN32_RGB_MATRIX_ROW_PINS { C4, C5, C6, C7, C8, C9, C10, C11, C12, B6, B7, B8, B9, B10, B11 }
 
 /* Enable additional RGB effects                                       */
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
