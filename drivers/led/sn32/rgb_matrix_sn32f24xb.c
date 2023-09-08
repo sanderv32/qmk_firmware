@@ -196,7 +196,7 @@ static void rgb_ch_ctrl(PWMConfig *cfg) {
 #endif
 #if (SN32_PWM_CONTROL == HARDWARE_PWM)
         cfg->channels[ch_idx].pfpamsk = pio_value > 23;
-        cfg->channels[ch_idx].mode    = SN32_SN32_PWM_OUTPUT_ACTIVE_LEVEL;
+        cfg->channels[ch_idx].mode    = SN32_PWM_OUTPUT_ACTIVE_LEVEL;
 #endif // SN32_PWM_CONTROL
     }
 }
