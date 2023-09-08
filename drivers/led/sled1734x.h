@@ -29,24 +29,24 @@ typedef struct sled1734x_led {
 
 extern const sled1734x_led PROGMEM g_sled1734x_leds[RGB_MATRIX_LED_COUNT];
 
-void SLED1734X_init(uint8_t addr);
-void SLED1734X_write_register(uint8_t addr, uint8_t reg, uint8_t data);
-bool SLED1734X_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer);
+void sled1734x_init(uint8_t addr);
+void sled1734x_write_register(uint8_t addr, uint8_t reg, uint8_t data);
+bool sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer);
 
-void SLED1734X_set_color(int index, uint8_t red, uint8_t green, uint8_t blue);
-void SLED1734X_set_color_all(uint8_t red, uint8_t green, uint8_t blue);
+void sled1734x_set_color(int index, uint8_t red, uint8_t green, uint8_t blue);
+void sled1734x_set_color_all(uint8_t red, uint8_t green, uint8_t blue);
 
-void SLED1734X_set_led_control_register(uint8_t index, bool red, bool green, bool blue);
+void sled1734x_set_led_control_register(uint8_t index, bool red, bool green, bool blue);
 
-void SLED1734X_sw_return_normal(uint8_t addr);
-void SLED1734X_sw_shutdown(uint8_t addr);
+void sled1734x_sw_return_normal(uint8_t addr);
+void sled1734x_sw_shutdown(uint8_t addr);
 
 // This should not be called from an interrupt
 // (eg. from a timer interrupt).
 // Call this while idle (in between matrix scans).
 // If the buffer is dirty, it will update the driver with the buffer.
-void SLED1734X_update_pwm_buffers(uint8_t addr, uint8_t index);
-void SLED1734X_update_led_control_registers(uint8_t addr, uint8_t index);
+void sled1734x_update_pwm_buffers(uint8_t addr, uint8_t index);
+void sled1734x_update_led_control_registers(uint8_t addr, uint8_t index);
 
 #define SLED_OFFSET 0x20
 #define SLED_FRAME_OFFSET 0x80

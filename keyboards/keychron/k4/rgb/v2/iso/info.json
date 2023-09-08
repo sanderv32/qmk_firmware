@@ -144,7 +144,7 @@
         },
 
     "rgb_matrix": {
-        "driver": "SN32F24xB",
+        "driver": "sn32F24xb",
         "layout": [
                 { "matrix": [ 0, 0 ], "flags": 4, "x": 0, "y": 0 },
                 { "matrix": [ 0, 1 ], "flags": 4, "x": 12, "y": 0 },

@@ -422,7 +422,7 @@ endif
 
 RGB_MATRIX_ENABLE ?= no
 
-VALID_RGB_MATRIX_TYPES := aw20216 is31fl3731 is31fl3733 is31fl3736 is31fl3737 is31fl3741 is31fl3742a is31fl3743a is31fl3745 is31fl3746a ckled2001 ws2812 SN32F24xB SLED1734X custom
+VALID_RGB_MATRIX_TYPES := aw20216 is31fl3731 is31fl3733 is31fl3736 is31fl3737 is31fl3741 is31fl3742a is31fl3743a is31fl3745 is31fl3746a ckled2001 ws2812 sn32F24xb sled1734x custom
 ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)
     ifeq ($(filter $(RGB_MATRIX_DRIVER),$(VALID_RGB_MATRIX_TYPES)),)
         $(call CATASTROPHIC_ERROR,Invalid RGB_MATRIX_DRIVER,RGB_MATRIX_DRIVER="$(RGB_MATRIX_DRIVER)" is not a valid matrix type)
@@ -520,7 +520,7 @@ endif
         QUANTUM_LIB_SRC += i2c_master.c
     endif
 
-    ifeq ($(strip $(RGB_MATRIX_DRIVER)), SLED1734X)
+    ifeq ($(strip $(RGB_MATRIX_DRIVER)), sled1734x)
         OPT_DEFS += -DSLED1734X -DHAL_USE_I2C=TRUE
         COMMON_VPATH += $(DRIVER_PATH)/led
         SRC += sled1734x.c
@@ -537,7 +537,7 @@ endif
         APA102_DRIVER_REQUIRED := yes
     endif
 
-    ifeq ($(strip $(RGB_MATRIX_DRIVER)), SN32F24xB)
+    ifeq ($(strip $(RGB_MATRIX_DRIVER)), sn32F24xb)
         OPT_DEFS += -DSN32F24xB -DSHARED_MATRIX
         COMMON_VPATH += $(DRIVER_PATH)/led/sn32
         SRC += rgb_matrix_sn32f24xb.c

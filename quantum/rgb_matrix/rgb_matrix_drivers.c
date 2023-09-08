@@ -134,13 +134,13 @@ static void init(void) {
 #        endif
 
 #    elif defined(SLED1734X)
-    SLED1734X_init(DRIVER_ADDR_1);
+    sled1734x_init(DRIVER_ADDR_1);
 #        if defined(DRIVER_ADDR_2)
-    SLED1734X_init(DRIVER_ADDR_2);
+    sled1734x_init(DRIVER_ADDR_2);
 #            if defined(DRIVER_ADDR_3)
-    SLED1734X_init(DRIVER_ADDR_3);
+    sled1734x_init(DRIVER_ADDR_3);
 #                if defined(DRIVER_ADDR_4)
-    SLED1734X_init(DRIVER_ADDR_4);
+    sled1734x_init(DRIVER_ADDR_4);
 #                endif
 #            endif
 #        endif
@@ -165,7 +165,7 @@ static void init(void) {
 #    elif defined(CKLED2001)
         ckled2001_set_led_control_register(index, enabled, enabled, enabled);
 #    elif defined(SLED1734X)
-        SLED1734X_set_led_control_register(index, enabled, enabled, enabled);
+        sled1734x_set_led_control_register(index, enabled, enabled, enabled);
 #    endif
     }
 
@@ -258,13 +258,13 @@ static void init(void) {
 #        endif
 
 #    elif defined(SLED1734X)
-    SLED1734X_update_led_control_registers(DRIVER_ADDR_1, 0);
+    sled1734x_update_led_control_registers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
-    SLED1734X_update_led_control_registers(DRIVER_ADDR_2, 1);
+    sled1734x_update_led_control_registers(DRIVER_ADDR_2, 1);
 #            if defined(DRIVER_ADDR_3)
-    SLED1734X_update_led_control_registers(DRIVER_ADDR_3, 2);
+    sled1734x_update_led_control_registers(DRIVER_ADDR_3, 2);
 #                if defined(DRIVER_ADDR_4)
-    SLED1734X_update_led_control_registers(DRIVER_ADDR_4, 3);
+    sled1734x_update_led_control_registers(DRIVER_ADDR_4, 3);
 #                endif
 #            endif
 #        endif
@@ -420,13 +420,13 @@ const rgb_matrix_driver_t rgb_matrix_driver = {
 
 #    elif defined(SLED1734X)
 static void flush(void) {
-    SLED1734X_update_pwm_buffers(DRIVER_ADDR_1, 0);
+    sled1734x_update_pwm_buffers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
-    SLED1734X_update_pwm_buffers(DRIVER_ADDR_2, 1);
+    sled1734x_update_pwm_buffers(DRIVER_ADDR_2, 1);
 #            if defined(DRIVER_ADDR_3)
-    SLED1734X_update_pwm_buffers(DRIVER_ADDR_3, 2);
+    sled1734x_update_pwm_buffers(DRIVER_ADDR_3, 2);
 #                if defined(DRIVER_ADDR_4)
-    SLED1734X_update_pwm_buffers(DRIVER_ADDR_4, 3);
+    sled1734x_update_pwm_buffers(DRIVER_ADDR_4, 3);
 #                endif
 #            endif
 #        endif
@@ -435,8 +435,8 @@ static void flush(void) {
 const rgb_matrix_driver_t rgb_matrix_driver = {
     .init = init,
     .flush = flush,
-    .set_color = SLED1734X_set_color,
-    .set_color_all = SLED1734X_set_color_all,
+    .set_color = sled1734x_set_color,
+    .set_color_all = sled1734x_set_color_all,
 };
 #    endif
 
@@ -531,9 +531,9 @@ const rgb_matrix_driver_t rgb_matrix_driver = {
 #elif defined(SN32F24xB)
 
 const rgb_matrix_driver_t rgb_matrix_driver = {
-    .init          = SN32F24xB_init,
-    .flush         = SN32F24xB_flush,
-    .set_color     = SN32F24xB_set_color,
-    .set_color_all = SN32F24xB_set_color_all,
+    .init          = sn32f24xb_init,
+    .flush         = sn32f24xb_flush,
+    .set_color     = sn32f24xb_set_color,
+    .set_color_all = sn32f24xb_set_color_all,
 };
 #endif

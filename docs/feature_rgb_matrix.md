@@ -422,13 +422,13 @@ Where LED Index is the position of the LED in the `g_is31_leds` array. The `scal
 
 ---
 
-### SLED1734X :id=sled1734X
+### SLED1734X :id=sled1734x
 
 There is basic support for addressable RGB matrix lighting with the I2C SLED1734X RGB controller. To enable it, add this to your `rules.mk`:
 
 ```make
 RGB_MATRIX_ENABLE = yes
-RGB_MATRIX_DRIVER = SLED1734X
+RGB_MATRIX_DRIVER = sled1734x
 ```
 
 You can use between 1 and 4 SLED1734X IC's. Do not specify `DRIVER_ADDR_<N>` defines for IC's that are not present on your keyboard. You can define the following items in `config.h`:

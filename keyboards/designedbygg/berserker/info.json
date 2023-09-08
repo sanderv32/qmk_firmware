@@ -184,7 +184,7 @@
             "splash" : true,
             "typing_heatmap" : true,
         },
-        "driver": "SN32F24xB",
+        "driver": "sn32F24xb",
         "layout": [
             {"matrix": [0, 0],"flags": 1,"x":0, "y":0},
             {"matrix": [0, 2],"flags": 1,"x":26, "y":0},

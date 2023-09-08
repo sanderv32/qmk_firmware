@@ -485,7 +485,7 @@ static void rgb_callback(PWMDriver *pwmp) {
     chSysUnlockFromISR();
 }
 
-void SN32F24xB_init(void) {
+void sn32f24xb_init(void) {
     for (uint8_t x = 0; x < RGB_MATRIX_ROWS_HW; x++) {
         setPinOutput(led_row_pins[x]);
         writePinLow(led_row_pins[x]);
@@ -500,14 +500,14 @@ void SN32F24xB_init(void) {
     shared_matrix_rgb_enable();
 }
 
-void SN32F24xB_flush(void) {
+void sn32f24xb_flush(void) {
     if (led_state_buf_update_required) {
         memcpy(led_state, led_state_buf, sizeof(RGB) * RGB_MATRIX_LED_COUNT);
         led_state_buf_update_required = false;
     }
 }
 
-void SN32F24xB_set_color(int index, uint8_t r, uint8_t g, uint8_t b) {
+void sn32f24xb_set_color(int index, uint8_t r, uint8_t g, uint8_t b) {
 #ifdef UNDERGLOW_RBG
     bool flip_gb = false;
     for (uint8_t led_id = 0; led_id < UNDERGLOW_LEDS; led_id++) {
@@ -539,9 +539,9 @@ void SN32F24xB_set_color(int index, uint8_t r, uint8_t g, uint8_t b) {
 #endif // UNDERGLOW_RBG
 }
 
-void SN32F24xB_set_color_all(uint8_t r, uint8_t g, uint8_t b) {
+void sn32f24xb_set_color_all(uint8_t r, uint8_t g, uint8_t b) {
     for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
-        SN32F24xB_set_color(i, r, g, b);
+        sn32f24xb_set_color(i, r, g, b);
     }
 }
 
