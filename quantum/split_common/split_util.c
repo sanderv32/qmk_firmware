@@ -31,10 +31,6 @@
 #    include "rgblight.h"
 #endif
 
-#if defined(SPLIT_WATCHDOG_ENABLE)
-#    include "bootloader.h"
-#endif
-
 #ifndef SPLIT_USB_TIMEOUT
 #    define SPLIT_USB_TIMEOUT 2000
 #endif
@@ -210,9 +206,6 @@ void split_pre_init(void) {
 #endif
 
     if (is_keyboard_master()) {
-#if defined(USE_I2C) && defined(SSD1306OLED)
-        matrix_master_OLED_init();
-#endif
         transport_master_init();
     }
 }
