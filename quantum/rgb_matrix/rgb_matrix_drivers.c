@@ -24,7 +24,7 @@
  * be here if shared between boards.
  */
 
-#if defined(IS31FL3731) || defined(IS31FL3733) || defined(IS31FL3736) || defined(IS31FL3737) || defined(IS31FL3741) || defined(IS31FLCOMMON) || defined(CKLED2001) || defined(SLED1734X)
+#if defined(RGB_MATRIX_IS31FL3218) || defined(RGB_MATRIX_IS31FL3731) || defined(RGB_MATRIX_IS31FL3733) || defined(RGB_MATRIX_IS31FL3736) || defined(RGB_MATRIX_IS31FL3737) || defined(RGB_MATRIX_IS31FL3741) || defined(IS31FLCOMMON) || defined(RGB_MATRIX_CKLED2001) || defined(SLED1734X)
 #    include "i2c_master.h"
 
 // TODO: Remove this at some later date
@@ -37,7 +37,10 @@
 static void init(void) {
     i2c_init();
 
-#    if defined(IS31FL3731)
+#    if defined(RGB_MATRIX_IS31FL3218)
+    is31fl3218_init();
+
+#    elif defined(RGB_MATRIX_IS31FL3731)
     is31fl3731_init(DRIVER_ADDR_1);
 #        if defined(DRIVER_ADDR_2)
     is31fl3731_init(DRIVER_ADDR_2);
@@ -49,7 +52,7 @@ static void init(void) {
 #            endif
 #        endif
 
-#    elif defined(IS31FL3733)
+#    elif defined(RGB_MATRIX_IS31FL3733)
 #        if !defined(DRIVER_SYNC_1)
 #            define DRIVER_SYNC_1 0
 #        endif
@@ -73,7 +76,7 @@ static void init(void) {
 #            endif
 #        endif
 
-#    elif defined(IS31FL3736)
+#    elif defined(RGB_MATRIX_IS31FL3736)
     is31fl3736_init(DRIVER_ADDR_1);
 #        if defined(DRIVER_ADDR_2)
     is31fl3736_init(DRIVER_ADDR_2);
@@ -85,7 +88,7 @@ static void init(void) {
 #            endif
 #        endif
 
-#    elif defined(IS31FL3737)
+#    elif defined(RGB_MATRIX_IS31FL3737)
     is31fl3737_init(DRIVER_ADDR_1);
 #        if defined(DRIVER_ADDR_2)
     is31fl3737_init(DRIVER_ADDR_2);
@@ -97,7 +100,7 @@ static void init(void) {
 #            endif
 #        endif
 
-#    elif defined(IS31FL3741)
+#    elif defined(RGB_MATRIX_IS31FL3741)
     is31fl3741_init(DRIVER_ADDR_1);
 #        if defined(DRIVER_ADDR_2)
     is31fl3741_init(DRIVER_ADDR_2);
@@ -121,7 +124,7 @@ static void init(void) {
 #            endif
 #        endif
 
-#    elif defined(CKLED2001)
+#    elif defined(RGB_MATRIX_CKLED2001)
     ckled2001_init(DRIVER_ADDR_1);
 #        if defined(DRIVER_ADDR_2)
     ckled2001_init(DRIVER_ADDR_2);
@@ -150,19 +153,21 @@ static void init(void) {
         bool enabled = true;
 
         // This only caches it for later
-#    if defined(IS31FL3731)
+#    if defined(RGB_MATRIX_IS31FL3218)
+        is31fl3218_set_led_control_register(index, enabled, enabled, enabled);
+#    elif defined(RGB_MATRIX_IS31FL3731)
         is31fl3731_set_led_control_register(index, enabled, enabled, enabled);
-#    elif defined(IS31FL3733)
+#    elif defined(RGB_MATRIX_IS31FL3733)
         is31fl3733_set_led_control_register(index, enabled, enabled, enabled);
-#    elif defined(IS31FL3736)
+#    elif defined(RGB_MATRIX_IS31FL3736)
         is31fl3736_set_led_control_register(index, enabled, enabled, enabled);
-#    elif defined(IS31FL3737)
+#    elif defined(RGB_MATRIX_IS31FL3737)
         is31fl3737_set_led_control_register(index, enabled, enabled, enabled);
-#    elif defined(IS31FL3741)
+#    elif defined(RGB_MATRIX_IS31FL3741)
         is31fl3741_set_led_control_register(index, enabled, enabled, enabled);
 #    elif defined(IS31FLCOMMON)
         IS31FL_RGB_set_scaling_buffer(index, enabled, enabled, enabled);
-#    elif defined(CKLED2001)
+#    elif defined(RGB_MATRIX_CKLED2001)
         ckled2001_set_led_control_register(index, enabled, enabled, enabled);
 #    elif defined(SLED1734X)
         sled1734x_set_led_control_register(index, enabled, enabled, enabled);
@@ -170,7 +175,10 @@ static void init(void) {
     }
 
     // This actually updates the LED drivers
-#    if defined(IS31FL3731)
+#    if defined(RGB_MATRIX_IS31FL3218)
+    is31fl3218_update_led_control_registers();
+
+#    elif defined(RGB_MATRIX_IS31FL3731)
     is31fl3731_update_led_control_registers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
     is31fl3731_update_led_control_registers(DRIVER_ADDR_2, 1);
@@ -182,7 +190,7 @@ static void init(void) {
 #            endif
 #        endif
 
-#    elif defined(IS31FL3733)
+#    elif defined(RGB_MATRIX_IS31FL3733)
     is31fl3733_update_led_control_registers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
     is31fl3733_update_led_control_registers(DRIVER_ADDR_2, 1);
@@ -194,7 +202,7 @@ static void init(void) {
 #            endif
 #        endif
 
-#    elif defined(IS31FL3736)
+#    elif defined(RGB_MATRIX_IS31FL3736)
     is31fl3736_update_led_control_registers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
     is31fl3736_update_led_control_registers(DRIVER_ADDR_2, 1);
@@ -206,7 +214,7 @@ static void init(void) {
 #            endif
 #        endif
 
-#    elif defined(IS31FL3737)
+#    elif defined(RGB_MATRIX_IS31FL3737)
     is31fl3737_update_led_control_registers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
     is31fl3737_update_led_control_registers(DRIVER_ADDR_2, 1);
@@ -218,7 +226,7 @@ static void init(void) {
 #            endif
 #        endif
 
-#    elif defined(IS31FL3741)
+#    elif defined(RGB_MATRIX_IS31FL3741)
     is31fl3741_update_led_control_registers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
     is31fl3741_update_led_control_registers(DRIVER_ADDR_2, 1);
@@ -245,7 +253,7 @@ static void init(void) {
 #            endif
 #        endif
 
-#    elif defined(CKLED2001)
+#    elif defined(RGB_MATRIX_CKLED2001)
     ckled2001_update_led_control_registers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
     ckled2001_update_led_control_registers(DRIVER_ADDR_2, 1);
@@ -271,7 +279,19 @@ static void init(void) {
 #    endif
 }
 
-#    if defined(IS31FL3731)
+#    if defined(RGB_MATRIX_IS31FL3218)
+static void flush(void) {
+    is31fl3218_update_pwm_buffers();
+}
+
+const rgb_matrix_driver_t rgb_matrix_driver = {
+    .init          = init,
+    .flush         = flush,
+    .set_color     = is31fl3218_set_color,
+    .set_color_all = is31fl3218_set_color_all,
+};
+
+#    elif defined(RGB_MATRIX_IS31FL3731)
 static void flush(void) {
     is31fl3731_update_pwm_buffers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
@@ -286,13 +306,13 @@ static void flush(void) {
 }
 
 const rgb_matrix_driver_t rgb_matrix_driver = {
-    .init          = init,
-    .flush         = flush,
-    .set_color     = is31fl3731_set_color,
+    .init = init,
+    .flush = flush,
+    .set_color = is31fl3731_set_color,
     .set_color_all = is31fl3731_set_color_all,
 };
 
-#    elif defined(IS31FL3733)
+#    elif defined(RGB_MATRIX_IS31FL3733)
 static void flush(void) {
     is31fl3733_update_pwm_buffers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
@@ -313,7 +333,7 @@ const rgb_matrix_driver_t rgb_matrix_driver = {
     .set_color_all = is31fl3733_set_color_all,
 };
 
-#    elif defined(IS31FL3736)
+#    elif defined(RGB_MATRIX_IS31FL3736)
 static void flush(void) {
     is31fl3736_update_pwm_buffers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
@@ -334,7 +354,7 @@ const rgb_matrix_driver_t rgb_matrix_driver = {
     .set_color_all = is31fl3736_set_color_all,
 };
 
-#    elif defined(IS31FL3737)
+#    elif defined(RGB_MATRIX_IS31FL3737)
 static void flush(void) {
     is31fl3737_update_pwm_buffers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
@@ -355,7 +375,7 @@ const rgb_matrix_driver_t rgb_matrix_driver = {
     .set_color_all = is31fl3737_set_color_all,
 };
 
-#    elif defined(IS31FL3741)
+#    elif defined(RGB_MATRIX_IS31FL3741)
 static void flush(void) {
     is31fl3741_update_pwm_buffers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
@@ -397,7 +417,7 @@ const rgb_matrix_driver_t rgb_matrix_driver = {
     .set_color_all = IS31FL_RGB_set_color_all,
 };
 
-#    elif defined(CKLED2001)
+#    elif defined(RGB_MATRIX_CKLED2001)
 static void flush(void) {
     ckled2001_update_pwm_buffers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
@@ -440,34 +460,34 @@ const rgb_matrix_driver_t rgb_matrix_driver = {
 };
 #    endif
 
-#elif defined(AW20216)
+#elif defined(RGB_MATRIX_AW20216S)
 #    include "spi_master.h"
 
 static void init(void) {
     spi_init();
 
-    aw20216_init(DRIVER_1_CS, DRIVER_1_EN);
-#    if defined(DRIVER_2_CS)
-    aw20216_init(DRIVER_2_CS, DRIVER_2_EN);
+    aw20216s_init(AW20216S_DRIVER_1_CS, AW20216S_DRIVER_1_EN);
+#    if defined(AW20216S_DRIVER_2_CS)
+    aw20216s_init(AW20216S_DRIVER_2_CS, AW20216S_DRIVER_2_EN);
 #    endif
 }
 
 static void flush(void) {
-    aw20216_update_pwm_buffers(DRIVER_1_CS, 0);
-#    if defined(DRIVER_2_CS)
-    aw20216_update_pwm_buffers(DRIVER_2_CS, 1);
+    aw20216s_update_pwm_buffers(AW20216S_DRIVER_1_CS, 0);
+#    if defined(AW20216S_DRIVER_2_CS)
+    aw20216s_update_pwm_buffers(AW20216S_DRIVER_2_CS, 1);
 #    endif
 }
 
 const rgb_matrix_driver_t rgb_matrix_driver = {
     .init          = init,
     .flush         = flush,
-    .set_color     = aw20216_set_color,
-    .set_color_all = aw20216_set_color_all,
+    .set_color     = aw20216s_set_color,
+    .set_color_all = aw20216s_set_color_all,
 };
 
-#elif defined(WS2812)
-#    if defined(RGBLIGHT_ENABLE) && !defined(RGBLIGHT_CUSTOM_DRIVER)
+#elif defined(RGB_MATRIX_WS2812)
+#    if defined(RGBLIGHT_WS2812)
 #        pragma message "Cannot use RGBLIGHT and RGB Matrix using WS2812 at the same time."
 #        pragma message "You need to use a custom driver, or re-implement the WS2812 driver to use a different configuration."
 #    endif
