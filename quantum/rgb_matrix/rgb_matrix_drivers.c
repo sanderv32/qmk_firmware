@@ -548,7 +548,7 @@ const rgb_matrix_driver_t rgb_matrix_driver = {
     .set_color_all = setled_all,
 };
 
-#elif defined(RGB_MATRIX_SN32F24xB)
+#elif defined(RGB_MATRIX_SN32F24XB)
 
 const rgb_matrix_driver_t rgb_matrix_driver = {
     .init          = sn32f24xb_init,
