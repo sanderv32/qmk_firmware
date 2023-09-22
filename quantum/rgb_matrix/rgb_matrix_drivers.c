@@ -24,7 +24,7 @@
  * be here if shared between boards.
  */
 
-#if defined(RGB_MATRIX_IS31FL3218) || defined(RGB_MATRIX_IS31FL3731) || defined(RGB_MATRIX_IS31FL3733) || defined(RGB_MATRIX_IS31FL3736) || defined(RGB_MATRIX_IS31FL3737) || defined(RGB_MATRIX_IS31FL3741) || defined(IS31FLCOMMON) || defined(RGB_MATRIX_CKLED2001) || defined(SLED1734X)
+#if defined(RGB_MATRIX_IS31FL3218) || defined(RGB_MATRIX_IS31FL3731) || defined(RGB_MATRIX_IS31FL3733) || defined(RGB_MATRIX_IS31FL3736) || defined(RGB_MATRIX_IS31FL3737) || defined(RGB_MATRIX_IS31FL3741) || defined(IS31FLCOMMON) || defined(RGB_MATRIX_CKLED2001) || defined(RGB_MATRIX_SLED1734X)
 #    include "i2c_master.h"
 
 // TODO: Remove this at some later date
@@ -136,7 +136,7 @@ static void init(void) {
 #            endif
 #        endif
 
-#    elif defined(SLED1734X)
+#    elif defined(RGB_MATRIX_SLED1734X)
     sled1734x_init(DRIVER_ADDR_1);
 #        if defined(DRIVER_ADDR_2)
     sled1734x_init(DRIVER_ADDR_2);
@@ -169,7 +169,7 @@ static void init(void) {
         IS31FL_RGB_set_scaling_buffer(index, enabled, enabled, enabled);
 #    elif defined(RGB_MATRIX_CKLED2001)
         ckled2001_set_led_control_register(index, enabled, enabled, enabled);
-#    elif defined(SLED1734X)
+#    elif defined(RGB_MATRIX_SLED1734X)
         sled1734x_set_led_control_register(index, enabled, enabled, enabled);
 #    endif
     }
@@ -265,7 +265,7 @@ static void init(void) {
 #            endif
 #        endif
 
-#    elif defined(SLED1734X)
+#    elif defined(RGB_MATRIX_SLED1734X)
     sled1734x_update_led_control_registers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
     sled1734x_update_led_control_registers(DRIVER_ADDR_2, 1);
@@ -438,7 +438,7 @@ const rgb_matrix_driver_t rgb_matrix_driver = {
     .set_color_all = ckled2001_set_color_all,
 };
 
-#    elif defined(SLED1734X)
+#    elif defined(RGB_MATRIX_SLED1734X)
 static void flush(void) {
     sled1734x_update_pwm_buffers(DRIVER_ADDR_1, 0);
 #        if defined(DRIVER_ADDR_2)
@@ -548,7 +548,7 @@ const rgb_matrix_driver_t rgb_matrix_driver = {
     .set_color_all = setled_all,
 };
 
-#elif defined(SN32F24xB)
+#elif defined(RGB_MATRIX_SN32F24xB)
 
 const rgb_matrix_driver_t rgb_matrix_driver = {
     .init          = sn32f24xb_init,
