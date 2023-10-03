@@ -1,4 +1,4 @@
-# GG Ironclad
+# DesignedbyGG Ironclad
 
 Ironclad
 
@@ -6,7 +6,8 @@ Keyboard Maintainer: [Dimitris Mantzouranis](https://github.com/dexter93)
 Brought to you by: [SonixQMK](https://github.com/SonixQMK/qmk_firmware)
 Hardware Supported: SN32F248BF
 
-Revisions Supported: ICL01 (both v1 and v2 - hardware is identical)
+Revisions Supported: -ICL01 (both v1 and v2 - hardware is identical)
+                     -ICL03 (v3)
 Make example for this keyboard (after setting up your build environment):
 
     qmk compile -kb designedbygg/ironclad/icl01 -km default
