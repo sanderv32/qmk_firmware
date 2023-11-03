@@ -1,6 +1,6 @@
 {
   "name": "Keychron K2v2 RGB ISO",
-  "vendorId": "0x0001",
+  "vendorId": "0x3434",
   "productId": "0xFE03",
   "matrix": {"rows": 6, "cols": 16},
   "keycodes": ["qmk_lighting"],
