@@ -1,6 +1,4 @@
-/* Copyright 2022 Philip Mourdjis <philip.j.m@gmail.com>
- * Copyright 2023 KeijoMika (https://github.com/KeijoMika)
- * Copyright 2023 Santanu Paik (https://github.com/ITNerd69)
+/* Copyright 2023 Santanu Paik (https://github.com/itnerd69)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +14,4 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-#define SN32_RGB_MATRIX_ROW_PINS { C3, C1, C0, C6, C5, C4, C9, C8, C7, C12, C11, C10, B13, C14, C13, B14, B15, D3 }
-#define DIP_SWITCH_PINS { D4, D5 }
-#define WEAR_LEVELING_SN32_EMULATION_PAGE_COUNT 29
-#define RGB_MATRIX_FRAMEBUFFER_EFFECTS
-#define RGB_MATRIX_KEYPRESSES
-#define RGB_DISABLE_WHEN_USB_SUSPENDED
+#define RGB_MATRIX_LED_COUNT 84
