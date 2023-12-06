@@ -123,6 +123,16 @@
 #   define SLED1734X_LED_COUNT RGB_MATRIX_LED_COUNT
 #endif
 
+#if defined(SLED1734X_I2C_ADDRESS_4)
+#    define SLED1734X_DRIVER_COUNT 4
+#elif defined(SLED1734X_I2C_ADDRESS_3)
+#    define SLED1734X_DRIVER_COUNT 3
+#elif defined(SLED1734X_I2C_ADDRESS_2)
+#    define SLED1734X_DRIVER_COUNT 2
+#elif defined(SLED1734X_I2C_ADDRESS_1)
+#    define SLED1734X_DRIVER_COUNT 1
+#endif
+
 typedef struct sled1734x_led {
     uint8_t driver : 2;
     uint8_t r;

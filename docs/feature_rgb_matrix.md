@@ -428,14 +428,13 @@ You can use between 1 and 4 SLED1734X IC's. Do not specify `DRIVER_ADDR_<N>` def
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `SLED_TIMEOUT` | (Optional) How long to wait for i2c messages, in milliseconds | 100 |
-| `SLED_PERSISTENCE` | (Optional) Retry failed messages this many times | 0 |
-| `DRIVER_COUNT` | (Required) How many RGB driver IC's are present | |
+| `SLED1734X_TIMEOUT` | (Optional) How long to wait for i2c messages, in milliseconds | 100 |
+| `SLED1734X_PERSISTENCE` | (Optional) Retry failed messages this many times | 0 |
 | `RGB_MATRIX_LED_COUNT` | (Required) How many RGB lights are present across all drivers | |
-| `DRIVER_ADDR_1` | (Required) Address for the first RGB driver | |
-| `DRIVER_ADDR_2` | (Optional) Address for the second RGB driver | |
-| `DRIVER_ADDR_3` | (Optional) Address for the third RGB driver | |
-| `DRIVER_ADDR_4` | (Optional) Address for the fourth RGB driver | |
+| `SLED1734X_I2C_ADDRESS_1` | (Required) Address for the first RGB driver | |
+| `SLED1734X_I2C_ADDRESS_2` | (Optional) Address for the second RGB driver | |
+| `SLED1734X_I2C_ADDRESS_3` | (Optional) Address for the third RGB driver | |
+| `SLED1734X_I2C_ADDRESS_4` | (Optional) Address for the fourth RGB driver | |
 
 Here is an example using 2 drivers.
 
@@ -447,10 +446,9 @@ Here is an example using 2 drivers.
 // 0b1110111 (0x77) AD <-> VCC
 // 0b1110101 (0x75) AD <-> SCL
 // 0b1110110 (0x76) AD <-> SDA
-#define DRIVER_ADDR_1 0b1110100
-#define DRIVER_ADDR_2 0b1110110
+#define SLED1734X_I2C_ADDRESS_1 SLED1734X_I2C_ADDRESS_GND
+#define SLED1734X_I2C_ADDRESS_2 SLED1734X_I2C_ADDRESS_SDA
 
-#define DRIVER_COUNT 2
 #define DRIVER_1_LED_TOTAL 25
 #define DRIVER_2_LED_TOTAL 24
 #define RGB_MATRIX_LED_COUNT (DRIVER_1_LED_TOTAL + DRIVER_2_LED_TOTAL)
