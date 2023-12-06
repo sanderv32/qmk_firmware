@@ -119,6 +119,10 @@
 #define SLED1734X_I2C_ADDRESS_SDA 0x76
 #define SLED1734X_I2C_ADDRESS_VDDIO 0x77
 
+#if defined(RGB_MATRIX_SLED1734X)
+#   define SLED1734X_LED_COUNT RGB_MATRIX_LED_COUNT
+#endif
+
 typedef struct sled1734x_led {
     uint8_t driver : 2;
     uint8_t r;
