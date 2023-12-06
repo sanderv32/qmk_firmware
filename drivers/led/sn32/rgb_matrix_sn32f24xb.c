@@ -3,27 +3,6 @@
 #include "rgb_matrix.h"
 #include "sn32f24xb.h"
 
-#if !defined(RGB_MATRIX_HUE_STEP)
-#    define RGB_MATRIX_HUE_STEP 8
-#endif
-
-#if !defined(RGB_MATRIX_SAT_STEP)
-#    define RGB_MATRIX_SAT_STEP 16
-#endif
-
-#if !defined(RGB_MATRIX_VAL_STEP)
-#    define RGB_MATRIX_VAL_STEP 16
-#endif
-
-#if !defined(RGB_MATRIX_SPD_STEP)
-#    define RGB_MATRIX_SPD_STEP 16
-#endif
-
-#if !defined(RGB_MATRIX_MAXIMUM_BRIGHTNESS) || RGB_MATRIX_MAXIMUM_BRIGHTNESS > UINT8_MAX
-#    undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
-#    define RGB_MATRIX_MAXIMUM_BRIGHTNESS UINT8_MAX
-#endif
-
 #define ROWS_PER_HAND (MATRIX_ROWS)
 
 #if !defined(MATRIX_IO_DELAY)
