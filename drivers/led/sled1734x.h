@@ -145,6 +145,7 @@ extern const sled1734x_led PROGMEM g_sled1734x_leds[SLED1734X_LED_COUNT];
 void sled1734x_init_drivers(void);
 void sled1734x_init(uint8_t addr);
 void sled1734x_write_register(uint8_t addr, uint8_t reg, uint8_t data);
+void sled1734x_select_page(uint8_t addr, uint8_t page);
 bool sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer);
 
 void sled1734x_set_color(int index, uint8_t red, uint8_t green, uint8_t blue);

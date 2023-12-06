@@ -77,12 +77,13 @@ void sled1734x_write_register(uint8_t addr, uint8_t reg, uint8_t data) {
 #endif
 }
 
+void sled1734x_select_page(uint8_t addr, uint8_t page) {
+    sled1734x_write_register(addr, SLED1734X_REG_COMMAND, page);
+}
+
 bool sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer) {
-    uint8_t page_frame_select[2];
-    page_frame_select[0] = SLED1734X_REG_COMMAND;
     // select the first frame
-    page_frame_select[1] = SLED1734X_COMMAND_FRAME_1;
-    i2c_transmit(addr << 1, page_frame_select, 2, SLED1734X_TIMEOUT);
+    sled1734x_select_page(addr, SLED1734X_COMMAND_FRAME_1);
     // transmit PWM registers in 2 transfers of 64 bytes
     // g_twi_transfer_buffer[] is 65 bytes
 
@@ -106,8 +107,7 @@ bool sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer) {
 #endif
     }
     // select the second frame
-    page_frame_select[1] = SLED1734X_COMMAND_FRAME_2;
-    i2c_transmit(addr << 1, page_frame_select, 2, SLED1734X_TIMEOUT);
+    sled1734x_select_page(addr, SLED1734X_COMMAND_FRAME_2);
     // transmit PWM registers in 2 transfers of 64 bytes
     // g_twi_transfer_buffer[] is 65 bytes
 
@@ -201,7 +201,7 @@ void sled1734x_init(uint8_t addr) {
     sled1734x_write_register(addr, SLED1734X_FUNCTION_REG_CURRENT_CONTROL, SLED1734X_CURRENT_CONTROL_ENABLE);
 
     // select page frame 1
-    sled1734x_write_register(addr, SLED1734X_REG_COMMAND, SLED1734X_COMMAND_FRAME_1);
+    sled1734x_select_page(addr, SLED1734X_COMMAND_FRAME_1);
 
     // turn off all LEDs in the LED control register
     for (int i = 0x00; i <= 0x0F; i++) {
@@ -219,7 +219,7 @@ void sled1734x_init(uint8_t addr) {
     }
 
     // select page frame 2
-    sled1734x_write_register(addr, SLED1734X_REG_COMMAND, SLED1734X_COMMAND_FRAME_2);
+    sled1734x_select_page(addr, SLED1734X_COMMAND_FRAME_2);
 
     // turn off all LEDs in the LED control register
     for (int i = 0x00; i <= 0x0F; i++) {
@@ -303,12 +303,12 @@ void sled1734x_update_pwm_buffers(uint8_t addr, uint8_t index) {
 void sled1734x_update_led_control_registers(uint8_t addr, uint8_t index) {
     if (g_led_control_registers_update_required[index]) {
         // select the first frame
-        sled1734x_write_register(addr, SLED1734X_REG_COMMAND, SLED1734X_COMMAND_FRAME_1);
+        sled1734x_select_page(addr, SLED1734X_COMMAND_FRAME_1);
         for (int i = 0; i < 16; i++) {
             sled1734x_write_register(addr, i, g_led_control_registers[index][i]);
         }
         // select the second frame
-        sled1734x_write_register(addr, SLED1734X_REG_COMMAND, SLED1734X_COMMAND_FRAME_2);
+        sled1734x_select_page(addr, SLED1734X_COMMAND_FRAME_2);
         for (int i = 0; i < 16; i++) {
             sled1734x_write_register(addr, i, g_led_control_registers[index][i + 16]);
         }
