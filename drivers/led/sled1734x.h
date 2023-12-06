@@ -19,6 +19,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "progmem.h"
+#include "util.h"
 
 /* Command Registers Declarations */
 #define SLED1734X_REG_COMMAND 0xFD
@@ -138,7 +139,7 @@ typedef struct sled1734x_led {
     uint8_t r;
     uint8_t g;
     uint8_t b;
-} __attribute__((packed)) sled1734x_led;
+} PACKED sled1734x_led;
 
 extern const sled1734x_led PROGMEM g_sled1734x_leds[SLED1734X_LED_COUNT];
 
