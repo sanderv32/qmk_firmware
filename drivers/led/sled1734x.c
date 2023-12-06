@@ -18,15 +18,6 @@
 #include "i2c_master.h"
 #include "wait.h"
 
-// This is a 7-bit address, that gets left-shifted and bit 0
-// set to 0 for write, 1 for read (as per I2C protocol)
-// The address will vary depending on your wiring:
-// 0b1110100 (0x74) AD <-> GND
-// 0b1110111 (0x77) AD <-> VCC
-// 0b1110101 (0x75) AD <-> SCL
-// 0b1110110 (0x76) AD <-> SDA
-#define SLED1734X_ADDR_DEFAULT 0x74
-
 /* Function Registers Declarations */
 #define SLED1734X_REG_CONFIG 0x00 // Configuration register
 // Sync Mode
@@ -115,11 +106,11 @@ uint8_t g_twi_transfer_buffer[65];
 // We could optimize this and take out the unused registers from these
 // buffers and the transfers in sled1734x_write_pwm_buffer() but it's
 // probably not worth the extra complexity.
-uint8_t g_pwm_buffer[DRIVER_COUNT][256];
-bool    g_pwm_buffer_update_required[DRIVER_COUNT] = {false};
+uint8_t g_pwm_buffer[SLED1734X_DRIVER_COUNT][256];
+bool    g_pwm_buffer_update_required[SLED1734X_DRIVER_COUNT] = {false};
 
-uint8_t g_led_control_registers[DRIVER_COUNT][32]             = {{0}};
-bool    g_led_control_registers_update_required[DRIVER_COUNT] = {false};
+uint8_t g_led_control_registers[SLED1734X_DRIVER_COUNT][32]             = {{0}};
+bool    g_led_control_registers_update_required[SLED1734X_DRIVER_COUNT] = {false};
 
 // This is the bit pattern in the LED control registers
 // (for matrix type 3, using split frames)
@@ -214,6 +205,35 @@ bool sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer) {
     return true;
 }
 
+void sled1734x_init_drivers(void) {
+    i2c_init();
+    sled1734x_init(SLED1734X_I2C_ADDRESS_1);
+#if defined(SLED1734X_I2C_ADDRESS_2)
+    sled1734x_init(SLED1734X_I2C_ADDRESS_2);
+#    if defined(SLED1734X_I2C_ADDRESS_3)
+    sled1734x_init(SLED1734X_I2C_ADDRESS_3);
+#        if defined(SLED1734X_I2C_ADDRESS_4)
+    sled1734x_init(SLED1734X_I2C_ADDRESS_4);
+#        endif
+#    endif
+#endif
+
+    for (int i = 0; i < SLED1734X_LED_COUNT; i++) {
+        sled1734x_set_led_control_register(i, true, true, true);
+    }
+
+    sled1734x_update_led_control_registers(SLED1734X_I2C_ADDRESS_1, 0);
+#if defined(SLED1734X_I2C_ADDRESS_2)
+    sled1734x_update_led_control_registers(SLED1734X_I2C_ADDRESS_2, 1);
+#    if defined(SLED1734X_I2C_ADDRESS_3)
+    sled1734x_update_led_control_registers(SLED1734X_I2C_ADDRESS_3, 2);
+#        if defined(SLED1734X_I2C_ADDRESS_4)
+    sled1734x_update_led_control_registers(SLED1734X_I2C_ADDRESS_4, 3);
+#        endif
+#    endif
+#endif
+}
+
 void sled1734x_init(uint8_t addr) {
     // Toggle the SDB pin HIGH to disable the hardware power down state
     // Not always connected to the MCU, hence optional here.
@@ -293,7 +313,7 @@ void sled1734x_init(uint8_t addr) {
 
 void sled1734x_set_color(int index, uint8_t red, uint8_t green, uint8_t blue) {
     sled1734x_led led;
-    if (index >= 0 && index < RGB_MATRIX_LED_COUNT) {
+    if (index >= 0 && index < SLED1734X_LED_COUNT) {
         memcpy_P(&led, (&g_sled1734x_leds[index]), sizeof(led));
 
         if (g_pwm_buffer[led.driver][led.r] == red && g_pwm_buffer[led.driver][led.g] == green && g_pwm_buffer[led.driver][led.b] == blue) {
@@ -307,7 +327,7 @@ void sled1734x_set_color(int index, uint8_t red, uint8_t green, uint8_t blue) {
 }
 
 void sled1734x_set_color_all(uint8_t red, uint8_t green, uint8_t blue) {
-    for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
+    for (int i = 0; i < SLED1734X_LED_COUNT; i++) {
         sled1734x_set_color(i, red, green, blue);
     }
 }
@@ -366,6 +386,19 @@ void sled1734x_update_led_control_registers(uint8_t addr, uint8_t index) {
         }
     }
     g_led_control_registers_update_required[index] = false;
+}
+
+void sled1734x_flush(void) {
+    sled1734x_update_pwm_buffers(SLED1734X_I2C_ADDRESS_1, 0);
+#if defined(SLED1734X_I2C_ADDRESS_2)
+    sled1734x_update_pwm_buffers(SLED1734X_I2C_ADDRESS_2, 1);
+#    if defined(SLED1734X_I2C_ADDRESS_3)
+    sled1734x_update_pwm_buffers(SLED1734X_I2C_ADDRESS_3, 2);
+#        if defined(SLED1734X_I2C_ADDRESS_4)
+    sled1734x_update_pwm_buffers(SLED1734X_I2C_ADDRESS_4, 3);
+#        endif
+#    endif
+#endif
 }
 
 void sled1734x_sw_return_normal(uint8_t addr) {

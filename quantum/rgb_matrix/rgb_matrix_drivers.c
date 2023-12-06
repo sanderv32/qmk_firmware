@@ -439,22 +439,9 @@ const rgb_matrix_driver_t rgb_matrix_driver = {
 };
 
 #    elif defined(RGB_MATRIX_SLED1734X)
-static void flush(void) {
-    sled1734x_update_pwm_buffers(DRIVER_ADDR_1, 0);
-#        if defined(DRIVER_ADDR_2)
-    sled1734x_update_pwm_buffers(DRIVER_ADDR_2, 1);
-#            if defined(DRIVER_ADDR_3)
-    sled1734x_update_pwm_buffers(DRIVER_ADDR_3, 2);
-#                if defined(DRIVER_ADDR_4)
-    sled1734x_update_pwm_buffers(DRIVER_ADDR_4, 3);
-#                endif
-#            endif
-#        endif
-}
-
 const rgb_matrix_driver_t rgb_matrix_driver = {
     .init = init,
-    .flush = flush,
+    .flush = sled1734x_flush,
     .set_color = sled1734x_set_color,
     .set_color_all = sled1734x_set_color_all,
 };

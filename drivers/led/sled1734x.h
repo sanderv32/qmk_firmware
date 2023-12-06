@@ -20,6 +20,11 @@
 #include <stdbool.h>
 #include "progmem.h"
 
+#define SLED1734X_I2C_ADDRESS_GND 0x74
+#define SLED1734X_I2C_ADDRESS_SCL 0x75
+#define SLED1734X_I2C_ADDRESS_SDA 0x76
+#define SLED1734X_I2C_ADDRESS_VDDIO 0x77
+
 typedef struct sled1734x_led {
     uint8_t driver : 2;
     uint8_t r;
@@ -27,8 +32,9 @@ typedef struct sled1734x_led {
     uint8_t b;
 } __attribute__((packed)) sled1734x_led;
 
-extern const sled1734x_led PROGMEM g_sled1734x_leds[RGB_MATRIX_LED_COUNT];
+extern const sled1734x_led PROGMEM g_sled1734x_leds[SLED1734X_LED_COUNT];
 
+void sled1734x_init_drivers(void);
 void sled1734x_init(uint8_t addr);
 void sled1734x_write_register(uint8_t addr, uint8_t reg, uint8_t data);
 bool sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer);
@@ -37,6 +43,8 @@ void sled1734x_set_color(int index, uint8_t red, uint8_t green, uint8_t blue);
 void sled1734x_set_color_all(uint8_t red, uint8_t green, uint8_t blue);
 
 void sled1734x_set_led_control_register(uint8_t index, bool red, bool green, bool blue);
+
+void sled1734x_flush(void);
 
 void sled1734x_sw_return_normal(uint8_t addr);
 void sled1734x_sw_shutdown(uint8_t addr);
