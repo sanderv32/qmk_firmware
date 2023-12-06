@@ -114,8 +114,8 @@ static const uint32_t periodticks                           = RGB_MATRIX_MAXIMUM
 static const uint32_t freq                                  = (RGB_MATRIX_HUE_STEP * RGB_MATRIX_SAT_STEP * RGB_MATRIX_VAL_STEP * RGB_MATRIX_SPD_STEP * RGB_MATRIX_LED_PROCESS_LIMIT);
 static const pin_t    led_row_pins[SN32_RGB_MATRIX_ROWS_HW] = SN32_RGB_MATRIX_ROW_PINS; // We expect a R,B,G order here
 static const pin_t    led_col_pins[SN32_RGB_MATRIX_COLS]    = SN32_RGB_MATRIX_COL_PINS;
-static RGB            led_state[RGB_MATRIX_LED_COUNT];     // led state buffer
-static RGB            led_state_buf[RGB_MATRIX_LED_COUNT]; // led state buffer
+static RGB            led_state[SN32F24XB_LED_COUNT];     // led state buffer
+static RGB            led_state_buf[SN32F24XB_LED_COUNT]; // led state buffer
 bool                  led_state_buf_update_required = false;
 #ifdef UNDERGLOW_RBG // handle underglow with flipped B,G channels
 static const uint8_t underglow_leds[UNDERGLOW_LEDS] = UNDERGLOW_IDX;
@@ -269,7 +269,7 @@ static void update_pwm_channels(PWMDriver *pwmp) {
     for (uint8_t current_key_col = 0; current_key_col < SN32_RGB_MATRIX_COLS; current_key_col++) {
         uint8_t led_index = g_led_config.matrix_co[current_key_row][current_key_col];
 #    if (SN32_PWM_CONTROL == SOFTWARE_PWM)
-        if (led_index >= RGB_MATRIX_LED_COUNT) continue;
+        if (led_index >= SN32F24XB_LED_COUNT) continue;
 #    endif // SN32_PWM_CONTROL
         // Check if we need to enable RGB output
         if (led_state[led_index].b > 0) enable_pwm_output |= true;
@@ -380,7 +380,7 @@ static void update_pwm_channels(PWMDriver *pwmp) {
     for (uint8_t current_key_row = 0; current_key_row < MATRIX_ROWS; current_key_row++) {
         uint8_t led_index = g_led_config.matrix_co[current_key_row][current_key_col];
 #    if (SN32_PWM_CONTROL == SOFTWARE_PWM)
-        if (led_index >= RGB_MATRIX_LED_COUNT) continue;
+        if (led_index >= SN32F24XB_LED_COUNT) continue;
 #    endif
         uint8_t led_row_id = (current_key_row * SN32_RGB_MATRIX_ROW_CHANNELS);
         // Check if we need to enable RGB output
@@ -484,7 +484,7 @@ void sn32f24xb_init(void) {
 
 void sn32f24xb_flush(void) {
     if (led_state_buf_update_required) {
-        memcpy(led_state, led_state_buf, sizeof(RGB) * RGB_MATRIX_LED_COUNT);
+        memcpy(led_state, led_state_buf, sizeof(RGB) * SN32F24XB_LED_COUNT);
         led_state_buf_update_required = false;
     }
 }
@@ -522,7 +522,7 @@ void sn32f24xb_set_color(int index, uint8_t r, uint8_t g, uint8_t b) {
 }
 
 void sn32f24xb_set_color_all(uint8_t r, uint8_t g, uint8_t b) {
-    for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
+    for (int i = 0; i < SN32F24XB_LED_COUNT; i++) {
         sn32f24xb_set_color(i, r, g, b);
     }
 }
