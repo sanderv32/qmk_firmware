@@ -26,10 +26,3 @@
 
 /* Debug options */
 #define DEBUG_MATRIX_SCAN_RATE
-
-/* Disable RGB lighting when PC is in suspend */
-#define RGB_DISABLE_WHEN_USB_SUSPENDED
-
-/* RGB Matrix Effects */
-#define RGB_MATRIX_FRAMEBUFFER_EFFECTS
-#define RGB_MATRIX_KEYPRESSES
