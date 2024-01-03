@@ -11,7 +11,9 @@
         "pid": "0x8016",
         "device_version": "1.0.0"
     },
-
+    "dynamic_keymap": {
+        "layer_count": 5
+    },
     "features": {
         "audio": false,
         "backlight": false,
@@ -23,7 +25,6 @@
         "nkro": true,
         "rgb_matrix": true
     },
-    
     "debounce": 5,
     "diode_direction": "COL2ROW",
     "matrix_pins": {
