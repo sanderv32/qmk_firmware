@@ -186,8 +186,8 @@ void sled1734x_init(uint8_t addr) {
     // audio sync off
     sled1734x_write_register(addr, SLED1734X_FUNCTION_REG_AUDIOSYNC, SLED1734X_AUDIOSYNC_ENABLE);
     // breathe control
-    sled1734x_write_register(addr, SLED1734X_FUNCTION_REG_BREATHCONTROL1, SLED1734X_REG_BREATHCONTROL_FADE);
-    sled1734x_write_register(addr, SLED1734X_FUNCTION_REG_BREATHCONTROL2, SLED1734X_REG_BREATHCONTROL_BREATHE);
+    sled1734x_write_register(addr, SLED1734X_FUNCTION_REG_BREATHCONTROL1, SLED1734X_FADE_TIME);
+    sled1734x_write_register(addr, SLED1734X_FUNCTION_REG_BREATHCONTROL2, SLED1734X_BREATHE_ENABLE);
     // audio gain off
     sled1734x_write_register(addr, SLED1734X_FUNCTION_REG_AUDIOGAIN_CONTROL, SLED1734X_AUDIOGAIN_MODE);
     // staggered delay off
