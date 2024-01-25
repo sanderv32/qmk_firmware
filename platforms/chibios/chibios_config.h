@@ -192,4 +192,7 @@
 
 #if defined(SN32F2)
 #    define CPU_CLOCK SN32_HCLK
+#    ifndef WEAR_LEVELING_EFL_OMIT_LAST_SECTOR_COUNT
+#        define WEAR_LEVELING_EFL_OMIT_LAST_SECTOR_COUNT 1
+#    endif
 #endif
