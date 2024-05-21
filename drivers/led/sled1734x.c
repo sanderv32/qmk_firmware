@@ -26,9 +26,6 @@
 #    define SLED1734X_PERSISTENCE 0
 #endif
 
-// Transfer buffer for TWITransmitData()
-uint8_t i2c_transfer_buffer[65];
-
 // These buffers match the SLED1734X PWM registers 0x20-0x9F.
 // Storing them like this is optimal for I2C transfers to the registers.
 // We could optimize this and take out the unused registers from these
@@ -65,15 +62,13 @@ bool    g_led_control_registers_update_required[SLED1734X_DRIVER_COUNT] = {false
 // --------------------------------------------------------------------------------------
 
 void sled1734x_write_register(uint8_t addr, uint8_t reg, uint8_t data) {
-    i2c_transfer_buffer[0] = reg;
-    i2c_transfer_buffer[1] = data;
 
 #if SLED1734X_PERSISTENCE > 0
     for (uint8_t i = 0; i < SLED1734X_PERSISTENCE; i++) {
-        if (i2c_transmit(addr << 1, i2c_transfer_buffer, 2, SLED1734X_TIMEOUT) == 0) break;
+        if (i2c_writeReg(addr << 1, reg, &data, 1, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
     }
 #else
-    i2c_transmit(addr << 1, i2c_transfer_buffer, 2, SLED1734X_TIMEOUT);
+    i2c_writeReg(addr << 1, reg, &data, 1, SLED1734X_TIMEOUT);
 #endif
 }
 
@@ -84,50 +79,30 @@ void sled1734x_select_page(uint8_t addr, uint8_t page) {
 void sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer) {
     // select the first frame
     sled1734x_select_page(addr, SLED1734X_COMMAND_FRAME_1);
-    // transmit PWM registers in 2 transfers of 64 bytes
-    // i2c_transfer_buffer[] is 65 bytes
+    // transmit PWM registers in 12 transfers of 16 bytes
 
-    // iterate over the pwm_buffer contents at 64 byte intervals
-    for (int i = 0; i < SLED1734X_FRAME_OFFSET; i += 64) {
-        // set the first register, e.g. 0x20, 0x30, 0x40, etc.
-        i2c_transfer_buffer[0] = SLED1734X_OFFSET + i;
-        // copy the data from i to i+63
-        // device will auto-increment register for data after the first byte
-        // thus this sets registers 0x20-0x2F, 0x30-0x3F, etc. in one transfer
-        for (int j = 0; j < 64; j++) {
-            i2c_transfer_buffer[1 + j] = pwm_buffer[i + j];
-        }
-
+    // iterate over the pwm_buffer contents at 16 byte intervals
+    for (int i = 0; i < SLED1734X_FRAME_OFFSET; i += 16) {
 #if SLED1734X_PERSISTENCE > 0
-        for (uint8_t i = 0; i < SLED1734X_PERSISTENCE; i++) {
-            if (i2c_transmit(addr << 1, i2c_transfer_buffer, 65, SLED1734X_TIMEOUT) == 0) break;
+        for (uint8_t j = 0; j < SLED1734X_PERSISTENCE; j++) {
+            if (i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, pwm_buffer + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
         }
 #else
-        i2c_transmit(addr << 1, i2c_transfer_buffer, 65, SLED1734X_TIMEOUT);
+        i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, pwm_buffer + i, 16, SLED1734X_TIMEOUT);
 #endif
     }
     // select the second frame
     sled1734x_select_page(addr, SLED1734X_COMMAND_FRAME_2);
-    // transmit PWM registers in 2 transfers of 64 bytes
-    // i2c_transfer_buffer[] is 65 bytes
+    // transmit PWM registers in 12 transfers of 16 bytes
 
     // iterate over the pwm_buffer contents at 16 byte intervals
-    for (int i = 0; i < SLED1734X_FRAME_OFFSET; i += 64) {
-        // set the first register, e.g. 0x20, 0x30, 0x40, etc.
-        i2c_transfer_buffer[0] = SLED1734X_OFFSET + i;
-        // copy the data from i to i+63
-        // device will auto-increment register for data after the first byte
-        // thus this sets registers 0x20-0x2f, 0x30-0x3f, etc. in one transfer
-        for (int j = 0; j < 64; j++) {
-            i2c_transfer_buffer[1 + j] = pwm_buffer[SLED1734X_FRAME_OFFSET + i + j];
-        }
-
+    for (int i = 0; i < SLED1734X_FRAME_OFFSET; i += 16) {
 #if SLED1734X_PERSISTENCE > 0
-        for (uint8_t i = 0; i < SLED1734X_PERSISTENCE; i++) {
-            if (i2c_transmit(addr << 1, i2c_transfer_buffer, 65, SLED1734X_TIMEOUT) == 0) break;
+        for (uint8_t j = 0; j < SLED1734X_PERSISTENCE; j++) {
+            if (i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, pwm_buffer + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
         }
 #else
-        i2c_transmit(addr << 1, i2c_transfer_buffer, 65, SLED1734X_TIMEOUT);
+        i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, pwm_buffer + i, 16, SLED1734X_TIMEOUT);
 #endif
     }
 }
