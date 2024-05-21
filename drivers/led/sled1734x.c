@@ -76,7 +76,7 @@ void sled1734x_select_page(uint8_t addr, uint8_t page) {
     sled1734x_write_register(addr, SLED1734X_REG_COMMAND, page);
 }
 
-void sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer) {
+void sled1734x_write_pwm_buffer(uint8_t addr, uint8_t index) {
     // select the first frame
     sled1734x_select_page(addr, SLED1734X_COMMAND_FRAME_1);
     // transmit PWM registers in 12 transfers of 16 bytes
@@ -85,10 +85,10 @@ void sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer) {
     for (int i = 0; i < SLED1734X_FRAME_OFFSET; i += 16) {
 #if SLED1734X_PERSISTENCE > 0
         for (uint8_t j = 0; j < SLED1734X_PERSISTENCE; j++) {
-            if (i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, pwm_buffer + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
+            if (i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
         }
 #else
-        i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, pwm_buffer + i, 16, SLED1734X_TIMEOUT);
+        i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT);
 #endif
     }
     // select the second frame
@@ -99,10 +99,10 @@ void sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer) {
     for (int i = 0; i < SLED1734X_FRAME_OFFSET; i += 16) {
 #if SLED1734X_PERSISTENCE > 0
         for (uint8_t j = 0; j < SLED1734X_PERSISTENCE; j++) {
-            if (i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, pwm_buffer + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
+            if (i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
         }
 #else
-        i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, pwm_buffer + i, 16, SLED1734X_TIMEOUT);
+        i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT);
 #endif
     }
 }
@@ -267,7 +267,7 @@ void sled1734x_set_led_control_register(uint8_t index, bool red, bool green, boo
 
 void sled1734x_update_pwm_buffers(uint8_t addr, uint8_t index) {
     if (g_pwm_buffer_update_required[index]) {
-        sled1734x_write_pwm_buffer(addr, g_pwm_buffer[index]);
+        sled1734x_write_pwm_buffer(addr, index);
         g_pwm_buffer_update_required[index] = false;
     }
 }
