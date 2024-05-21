@@ -18,6 +18,9 @@
 #include "i2c_master.h"
 #include "wait.h"
 
+#define SLED1734X_PWM_REGISTER_COUNT 256
+#define SLED1734X_LED_CONTROL_REGISTER_COUNT 32
+
 #ifndef SLED1734X_TIMEOUT
 #    define SLED1734X_TIMEOUT 100
 #endif
@@ -44,11 +47,19 @@ const uint8_t i2c_addresses[SLED1734X_DRIVER_COUNT] = {
 // We could optimize this and take out the unused registers from these
 // buffers and the transfers in sled1734x_write_pwm_buffer() but it's
 // probably not worth the extra complexity.
-uint8_t g_pwm_buffer[SLED1734X_DRIVER_COUNT][256];
-bool    g_pwm_buffer_update_required[SLED1734X_DRIVER_COUNT] = {false};
+typedef struct sled1734x_driver_t {
+    uint8_t pwm_buffer[SLED1734X_PWM_REGISTER_COUNT];
+    bool    pwm_buffer_dirty;
+    uint8_t led_control_buffer[SLED1734X_LED_CONTROL_REGISTER_COUNT];
+    bool    led_control_buffer_dirty;
+} PACKED sled1734x_driver_t;
 
-uint8_t g_led_control_registers[SLED1734X_DRIVER_COUNT][32]             = {{0}};
-bool    g_led_control_registers_update_required[SLED1734X_DRIVER_COUNT] = {false};
+sled1734x_driver_t driver_buffers[SLED1734X_DRIVER_COUNT] = {{
+    .pwm_buffer               = {0},
+    .pwm_buffer_dirty         = false,
+    .led_control_buffer       = {0},
+    .led_control_buffer_dirty = false,
+}};
 
 // This is the bit pattern in the LED control registers
 // (for matrix type 3, using split frames)
@@ -98,10 +109,10 @@ void sled1734x_write_pwm_buffer(uint8_t index) {
     for (int i = 0; i < SLED1734X_FRAME_OFFSET; i += 16) {
 #if SLED1734X_PERSISTENCE > 0
         for (uint8_t j = 0; j < SLED1734X_PERSISTENCE; j++) {
-            if (i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
+            if (i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, driver_buffers[index].pwm_buffer + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
         }
 #else
-        i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT);
+        i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, driver_buffers[index].pwm_buffer + i, 16, SLED1734X_TIMEOUT);
 #endif
     }
     // select the second frame
@@ -112,10 +123,10 @@ void sled1734x_write_pwm_buffer(uint8_t index) {
     for (int i = 0; i < SLED1734X_FRAME_OFFSET; i += 16) {
 #if SLED1734X_PERSISTENCE > 0
         for (uint8_t j = 0; j < SLED1734X_PERSISTENCE; j++) {
-            if (i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
+            if (i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, driver_buffers[index].pwm_buffer + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
         }
 #else
-        i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT);
+        i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, driver_buffers[index].pwm_buffer + i, 16, SLED1734X_TIMEOUT);
 #endif
     }
 }
@@ -218,13 +229,13 @@ void sled1734x_set_color(int index, uint8_t red, uint8_t green, uint8_t blue) {
     if (index >= 0 && index < SLED1734X_LED_COUNT) {
         memcpy_P(&led, (&g_sled1734x_leds[index]), sizeof(led));
 
-        if (g_pwm_buffer[led.driver][led.r] == red && g_pwm_buffer[led.driver][led.g] == green && g_pwm_buffer[led.driver][led.b] == blue) {
+        if (driver_buffers[led.driver].pwm_buffer[led.r] == red && driver_buffers[led.driver].pwm_buffer[led.g] == green && driver_buffers[led.driver].pwm_buffer[led.b] == blue) {
             return;
         }
-        g_pwm_buffer[led.driver][led.r]          = red;
-        g_pwm_buffer[led.driver][led.g]          = green;
-        g_pwm_buffer[led.driver][led.b]          = blue;
-        g_pwm_buffer_update_required[led.driver] = true;
+        driver_buffers[led.driver].pwm_buffer[led.r] = red;
+        driver_buffers[led.driver].pwm_buffer[led.g] = green;
+        driver_buffers[led.driver].pwm_buffer[led.b] = blue;
+        driver_buffers[led.driver].pwm_buffer_dirty  = true;
     }
 }
 
@@ -247,45 +258,45 @@ void sled1734x_set_led_control_register(uint8_t index, bool red, bool green, boo
     uint8_t bit_b = (led.b) % 8;
 
     if (red) {
-        g_led_control_registers[led.driver][control_register_r] |= (1 << bit_r);
+        driver_buffers[led.driver].led_control_buffer[control_register_r] |= (1 << bit_r);
     } else {
-        g_led_control_registers[led.driver][control_register_r] &= ~(1 << bit_r);
+        driver_buffers[led.driver].led_control_buffer[control_register_r] &= ~(1 << bit_r);
     }
     if (green) {
-        g_led_control_registers[led.driver][control_register_g] |= (1 << bit_g);
+        driver_buffers[led.driver].led_control_buffer[control_register_g] |= (1 << bit_g);
     } else {
-        g_led_control_registers[led.driver][control_register_g] &= ~(1 << bit_g);
+        driver_buffers[led.driver].led_control_buffer[control_register_g] &= ~(1 << bit_g);
     }
     if (blue) {
-        g_led_control_registers[led.driver][control_register_b] |= (1 << bit_b);
+        driver_buffers[led.driver].led_control_buffer[control_register_b] |= (1 << bit_b);
     } else {
-        g_led_control_registers[led.driver][control_register_b] &= ~(1 << bit_b);
+        driver_buffers[led.driver].led_control_buffer[control_register_b] &= ~(1 << bit_b);
     }
 
-    g_led_control_registers_update_required[led.driver] = true;
+    driver_buffers[led.driver].pwm_buffer_dirty = true;
 }
 
 void sled1734x_update_pwm_buffers(uint8_t index) {
-    if (g_pwm_buffer_update_required[index]) {
+    if (driver_buffers[index].pwm_buffer_dirty) {
         sled1734x_write_pwm_buffer(index);
-        g_pwm_buffer_update_required[index] = false;
+        driver_buffers[index].pwm_buffer_dirty = false;
     }
 }
 
 void sled1734x_update_led_control_registers(uint8_t index) {
-    if (g_led_control_registers_update_required[index]) {
+    if (driver_buffers[index].pwm_buffer_dirty) {
         // select the first frame
         sled1734x_select_page(index, SLED1734X_COMMAND_FRAME_1);
         for (int i = 0; i < 16; i++) {
-            sled1734x_write_register(index, i, g_led_control_registers[index][i]);
+            sled1734x_write_register(index, i, driver_buffers[index].led_control_buffer[i]);
         }
         // select the second frame
         sled1734x_select_page(index, SLED1734X_COMMAND_FRAME_2);
         for (int i = 0; i < 16; i++) {
-            sled1734x_write_register(index, i, g_led_control_registers[index][i + 16]);
+            sled1734x_write_register(index, i, driver_buffers[index].led_control_buffer[i + 16]);
         }
     }
-    g_led_control_registers_update_required[index] = false;
+    driver_buffers[index].pwm_buffer_dirty = false;
 }
 
 void sled1734x_flush(void) {
