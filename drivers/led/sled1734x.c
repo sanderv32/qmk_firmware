@@ -81,7 +81,7 @@ void sled1734x_select_page(uint8_t addr, uint8_t page) {
     sled1734x_write_register(addr, SLED1734X_REG_COMMAND, page);
 }
 
-bool sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer) {
+void sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer) {
     // select the first frame
     sled1734x_select_page(addr, SLED1734X_COMMAND_FRAME_1);
     // transmit PWM registers in 2 transfers of 64 bytes
@@ -100,10 +100,10 @@ bool sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer) {
 
 #if SLED1734X_PERSISTENCE > 0
         for (uint8_t i = 0; i < SLED1734X_PERSISTENCE; i++) {
-            if (i2c_transmit(addr << 1, i2c_transfer_buffer, 65, SLED1734X_TIMEOUT) != 0) return false;
+            if (i2c_transmit(addr << 1, i2c_transfer_buffer, 65, SLED1734X_TIMEOUT) == 0) break;
         }
 #else
-        if (i2c_transmit(addr << 1, i2c_transfer_buffer, 65, SLED1734X_TIMEOUT) != 0) return false;
+        i2c_transmit(addr << 1, i2c_transfer_buffer, 65, SLED1734X_TIMEOUT);
 #endif
     }
     // select the second frame
@@ -124,13 +124,12 @@ bool sled1734x_write_pwm_buffer(uint8_t addr, uint8_t *pwm_buffer) {
 
 #if SLED1734X_PERSISTENCE > 0
         for (uint8_t i = 0; i < SLED1734X_PERSISTENCE; i++) {
-            if (i2c_transmit(addr << 1, i2c_transfer_buffer, 65, SLED1734X_TIMEOUT) != 0) return false;
+            if (i2c_transmit(addr << 1, i2c_transfer_buffer, 65, SLED1734X_TIMEOUT) == 0) break;
         }
 #else
-        if (i2c_transmit(addr << 1, i2c_transfer_buffer, 65, SLED1734X_TIMEOUT) != 0) return false;
+        i2c_transmit(addr << 1, i2c_transfer_buffer, 65, SLED1734X_TIMEOUT);
 #endif
     }
-    return true;
 }
 
 void sled1734x_init_drivers(void) {
@@ -293,11 +292,9 @@ void sled1734x_set_led_control_register(uint8_t index, bool red, bool green, boo
 
 void sled1734x_update_pwm_buffers(uint8_t addr, uint8_t index) {
     if (g_pwm_buffer_update_required[index]) {
-        if (!sled1734x_write_pwm_buffer(addr, g_pwm_buffer[index])) {
-            g_led_control_registers_update_required[index] = true;
-        }
+        sled1734x_write_pwm_buffer(addr, g_pwm_buffer[index]);
+        g_pwm_buffer_update_required[index] = false;
     }
-    g_pwm_buffer_update_required[index] = false;
 }
 
 void sled1734x_update_led_control_registers(uint8_t addr, uint8_t index) {
