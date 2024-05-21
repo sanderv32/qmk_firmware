@@ -300,16 +300,9 @@ void sled1734x_update_led_control_registers(uint8_t index) {
 }
 
 void sled1734x_flush(void) {
-    sled1734x_update_pwm_buffers(SLED1734X_I2C_ADDRESS_1, 0);
-#if defined(SLED1734X_I2C_ADDRESS_2)
-    sled1734x_update_pwm_buffers(SLED1734X_I2C_ADDRESS_2, 1);
-#    if defined(SLED1734X_I2C_ADDRESS_3)
-    sled1734x_update_pwm_buffers(SLED1734X_I2C_ADDRESS_3, 2);
-#        if defined(SLED1734X_I2C_ADDRESS_4)
-    sled1734x_update_pwm_buffers(SLED1734X_I2C_ADDRESS_4, 3);
-#        endif
-#    endif
-#endif
+    for (uint8_t i = 0; i < SLED1734X_LED_COUNT; i++) {
+        sled1734x_update_pwm_buffers(i);
+    }
 }
 
 void sled1734x_sw_return_normal(uint8_t index) {
