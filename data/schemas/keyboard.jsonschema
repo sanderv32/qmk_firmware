@@ -565,7 +565,9 @@
                         "is31fl3745",
                         "is31fl3746a",
                         "snled27351",
-                        "ws2812"
+                        "ws2812",
+                        "sled1734x",
+                        "sn32f24xb"
                     ]
                 },
                 "center_point": {
