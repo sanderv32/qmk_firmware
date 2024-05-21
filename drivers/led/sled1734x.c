@@ -16,6 +16,7 @@
 
 #include "sled1734x.h"
 #include "i2c_master.h"
+#include "gpio.h"
 #include "wait.h"
 
 #define SLED1734X_PWM_REGISTER_COUNT 256
@@ -151,8 +152,8 @@ void sled1734x_init(uint8_t index) {
     // Toggle the SDB pin HIGH to disable the hardware power down state
     // Not always connected to the MCU, hence optional here.
 #ifdef SLED1734X_SDB_PIN
-    setPinOutput(SLED1734X_SDB_PIN);
-    writePinHigh(SLED1734X_SDB_PIN);
+    gpio_set_pin_output(SLED1734X_SDB_PIN);
+    gpio_write_pin_high(SLED1734X_SDB_PIN);
 #endif
     // Hardware powerup requires 180us.
     wait_us(180);
