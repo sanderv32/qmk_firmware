@@ -65,10 +65,10 @@ void sled1734x_write_register(uint8_t addr, uint8_t reg, uint8_t data) {
 
 #if SLED1734X_PERSISTENCE > 0
     for (uint8_t i = 0; i < SLED1734X_PERSISTENCE; i++) {
-        if (i2c_writeReg(addr << 1, reg, &data, 1, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
+        if (i2c_write_register(addr << 1, reg, &data, 1, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
     }
 #else
-    i2c_writeReg(addr << 1, reg, &data, 1, SLED1734X_TIMEOUT);
+    i2c_write_register(addr << 1, reg, &data, 1, SLED1734X_TIMEOUT);
 #endif
 }
 
@@ -85,10 +85,10 @@ void sled1734x_write_pwm_buffer(uint8_t addr, uint8_t index) {
     for (int i = 0; i < SLED1734X_FRAME_OFFSET; i += 16) {
 #if SLED1734X_PERSISTENCE > 0
         for (uint8_t j = 0; j < SLED1734X_PERSISTENCE; j++) {
-            if (i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
+            if (i2c_write_register(addr << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
         }
 #else
-        i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT);
+        i2c_write_register(addr << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT);
 #endif
     }
     // select the second frame
@@ -99,10 +99,10 @@ void sled1734x_write_pwm_buffer(uint8_t addr, uint8_t index) {
     for (int i = 0; i < SLED1734X_FRAME_OFFSET; i += 16) {
 #if SLED1734X_PERSISTENCE > 0
         for (uint8_t j = 0; j < SLED1734X_PERSISTENCE; j++) {
-            if (i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
+            if (i2c_write_register(addr << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
         }
 #else
-        i2c_writeReg(addr << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT);
+        i2c_write_register(addr << 1, SLED1734X_OFFSET + i, g_pwm_buffer[index] + i, 16, SLED1734X_TIMEOUT);
 #endif
     }
 }
