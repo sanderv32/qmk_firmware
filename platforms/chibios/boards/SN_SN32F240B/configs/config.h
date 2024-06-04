@@ -1,5 +1,4 @@
-/* Copyright 2022 QMK
- * Copyright 2024 Dimitris Mantzouranis <d3xter93@gmail.com>
+/* Copyright 2024 Dimitris Mantzouranis <d3xter93@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 #pragma once
-
-#define RAW_IN_CAPACITY    1
-#define RAW_OUT_CAPACITY   1
 
 #    ifndef WEAR_LEVELING_EFL_OMIT_LAST_SECTOR_COUNT
 #        define WEAR_LEVELING_EFL_OMIT_LAST_SECTOR_COUNT 1
