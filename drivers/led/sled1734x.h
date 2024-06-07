@@ -121,7 +121,7 @@
 #define SLED1734X_I2C_ADDRESS_VDDIO 0x77
 
 #if defined(RGB_MATRIX_SLED1734X)
-#   define SLED1734X_LED_COUNT RGB_MATRIX_LED_COUNT
+#    define SLED1734X_LED_COUNT RGB_MATRIX_LED_COUNT
 #endif
 
 #if defined(SLED1734X_I2C_ADDRESS_4)
@@ -134,14 +134,14 @@
 #    define SLED1734X_DRIVER_COUNT 1
 #endif
 
-typedef struct sled1734x_led {
+typedef struct sled1734x_led_t {
     uint8_t driver : 2;
     uint8_t r;
     uint8_t g;
     uint8_t b;
-} PACKED sled1734x_led;
+} PACKED sled1734x_led_t;
 
-extern const sled1734x_led PROGMEM g_sled1734x_leds[SLED1734X_LED_COUNT];
+extern const sled1734x_led_t PROGMEM g_sled1734x_leds[SLED1734X_LED_COUNT];
 
 void sled1734x_init_drivers(void);
 void sled1734x_init(uint8_t index);

@@ -87,7 +87,6 @@ sled1734x_driver_t driver_buffers[SLED1734X_DRIVER_COUNT] = {{
 // --------------------------------------------------------------------------------------
 
 void sled1734x_write_register(uint8_t index, uint8_t reg, uint8_t data) {
-
 #if SLED1734X_PERSISTENCE > 0
     for (uint8_t i = 0; i < SLED1734X_PERSISTENCE; i++) {
         if (i2c_write_register(i2c_addresses[index] << 1, reg, &data, 1, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
@@ -135,7 +134,7 @@ void sled1734x_write_pwm_buffer(uint8_t index) {
 void sled1734x_init_drivers(void) {
     i2c_init();
 
-    for (uint8_t i = 0; i < SLED1734X_LED_COUNT; i++) {
+    for (uint8_t i = 0; i < SLED1734X_DRIVER_COUNT; i++) {
         sled1734x_init(i);
     }
 
@@ -143,7 +142,7 @@ void sled1734x_init_drivers(void) {
         sled1734x_set_led_control_register(i, true, true, true);
     }
 
-    for (uint8_t i = 0; i < SLED1734X_LED_COUNT; i++) {
+    for (uint8_t i = 0; i < SLED1734X_DRIVER_COUNT; i++) {
         sled1734x_update_led_control_registers(i);
     }
 }
@@ -226,7 +225,7 @@ void sled1734x_init(uint8_t index) {
 }
 
 void sled1734x_set_color(int index, uint8_t red, uint8_t green, uint8_t blue) {
-    sled1734x_led led;
+    sled1734x_led_t led;
     if (index >= 0 && index < SLED1734X_LED_COUNT) {
         memcpy_P(&led, (&g_sled1734x_leds[index]), sizeof(led));
 
@@ -247,7 +246,7 @@ void sled1734x_set_color_all(uint8_t red, uint8_t green, uint8_t blue) {
 }
 
 void sled1734x_set_led_control_register(uint8_t index, bool red, bool green, bool blue) {
-    sled1734x_led led;
+    sled1734x_led_t led;
     memcpy_P(&led, (&g_sled1734x_leds[index]), sizeof(led));
 
     uint8_t control_register_r = (led.r) / 8;
@@ -301,7 +300,7 @@ void sled1734x_update_led_control_registers(uint8_t index) {
 }
 
 void sled1734x_flush(void) {
-    for (uint8_t i = 0; i < SLED1734X_LED_COUNT; i++) {
+    for (uint8_t i = 0; i < SLED1734X_DRIVER_COUNT; i++) {
         sled1734x_update_pwm_buffers(i);
     }
 }
