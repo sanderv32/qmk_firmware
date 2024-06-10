@@ -5,8 +5,9 @@
 
 /* Needed for serial bitbang, half-duplex and full-duplex */
 #define HAL_USE_PAL TRUE
-#define PAL_USE_WAIT TRUE
-#define PAL_USE_CALLBACKS TRUE
+// Needed for serial bitbang
+//#define PAL_USE_WAIT TRUE
+//#define PAL_USE_CALLBACKS TRUE
 #include_next <halconf.h>
 #undef HAL_USE_PWM
 #define HAL_USE_PWM FALSE

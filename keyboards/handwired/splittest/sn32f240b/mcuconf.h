@@ -10,9 +10,9 @@
 #define SN32_SERIAL_USE_UART0 TRUE
 
 // These are needed if the communication is on the SD1 UART, either with standard or alternate pins
-#undef SN32_SERIAL_USE_UART1
-#define SN32_SERIAL_USE_UART1 TRUE
+//#undef SN32_SERIAL_USE_UART1
+//#define SN32_SERIAL_USE_UART1 TRUE
 
 // These are needed if the communication is on the SD2 UART, either with standard or alternate pins
-#undef SN32_SERIAL_USE_UART2
-#define SN32_SERIAL_USE_UART2 TRUE
+//#undef SN32_SERIAL_USE_UART2
+//#define SN32_SERIAL_USE_UART2 TRUE
