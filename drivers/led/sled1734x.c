@@ -22,12 +22,12 @@
 #define SLED1734X_PWM_REGISTER_COUNT 256
 #define SLED1734X_LED_CONTROL_REGISTER_COUNT 32
 
-#ifndef SLED1734X_TIMEOUT
-#    define SLED1734X_TIMEOUT 100
+#ifndef SLED1734X_I2C_TIMEOUT
+#    define SLED1734X_I2C_TIMEOUT 100
 #endif
 
-#ifndef SLED1734X_PERSISTENCE
-#    define SLED1734X_PERSISTENCE 0
+#ifndef SLED1734X_I2C_PERSISTENCE
+#    define SLED1734X_I2C_PERSISTENCE 0
 #endif
 
 const uint8_t i2c_addresses[SLED1734X_DRIVER_COUNT] = {
@@ -87,12 +87,12 @@ sled1734x_driver_t driver_buffers[SLED1734X_DRIVER_COUNT] = {{
 // --------------------------------------------------------------------------------------
 
 void sled1734x_write_register(uint8_t index, uint8_t reg, uint8_t data) {
-#if SLED1734X_PERSISTENCE > 0
-    for (uint8_t i = 0; i < SLED1734X_PERSISTENCE; i++) {
-        if (i2c_write_register(i2c_addresses[index] << 1, reg, &data, 1, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
+#if SLED1734X_I2C_PERSISTENCE > 0
+    for (uint8_t i = 0; i < SLED1734X_I2C_PERSISTENCE; i++) {
+        if (i2c_write_register(i2c_addresses[index] << 1, reg, &data, 1, SLED1734X_I2C_TIMEOUT) == I2C_STATUS_SUCCESS) break;
     }
 #else
-    i2c_write_register(i2c_addresses[index] << 1, reg, &data, 1, SLED1734X_TIMEOUT);
+    i2c_write_register(i2c_addresses[index] << 1, reg, &data, 1, SLED1734X_I2C_TIMEOUT);
 #endif
 }
 
@@ -107,12 +107,12 @@ void sled1734x_write_pwm_buffer(uint8_t index) {
 
     // iterate over the pwm_buffer contents at 16 byte intervals
     for (int i = 0; i < SLED1734X_FRAME_OFFSET; i += 16) {
-#if SLED1734X_PERSISTENCE > 0
-        for (uint8_t j = 0; j < SLED1734X_PERSISTENCE; j++) {
-            if (i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, driver_buffers[index].pwm_buffer + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
+#if SLED1734X_I2C_PERSISTENCE > 0
+        for (uint8_t j = 0; j < SLED1734X_I2C_PERSISTENCE; j++) {
+            if (i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, driver_buffers[index].pwm_buffer + i, 16, SLED1734X_I2C_TIMEOUT) == I2C_STATUS_SUCCESS) break;
         }
 #else
-        i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, driver_buffers[index].pwm_buffer + i, 16, SLED1734X_TIMEOUT);
+        i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, driver_buffers[index].pwm_buffer + i, 16, SLED1734X_I2C_TIMEOUT);
 #endif
     }
     // select the second frame
@@ -121,12 +121,12 @@ void sled1734x_write_pwm_buffer(uint8_t index) {
 
     // iterate over the pwm_buffer contents at 16 byte intervals
     for (int i = 0; i < SLED1734X_FRAME_OFFSET; i += 16) {
-#if SLED1734X_PERSISTENCE > 0
-        for (uint8_t j = 0; j < SLED1734X_PERSISTENCE; j++) {
-            if (i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, driver_buffers[index].pwm_buffer + i, 16, SLED1734X_TIMEOUT) == I2C_STATUS_SUCCESS) break;
+#if SLED1734X_I2C_PERSISTENCE > 0
+        for (uint8_t j = 0; j < SLED1734X_I2C_PERSISTENCE; j++) {
+            if (i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, driver_buffers[index].pwm_buffer + i, 16, SLED1734X_I2C_TIMEOUT) == I2C_STATUS_SUCCESS) break;
         }
 #else
-        i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, driver_buffers[index].pwm_buffer + i, 16, SLED1734X_TIMEOUT);
+        i2c_write_register(i2c_addresses[index] << 1, SLED1734X_OFFSET + i, driver_buffers[index].pwm_buffer + i, 16, SLED1734X_I2C_TIMEOUT);
 #endif
     }
 }
