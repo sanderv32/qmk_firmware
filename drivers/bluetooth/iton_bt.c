@@ -1,4 +1,4 @@
-// Copyright 2023 1Conan (@1Conan)
+// Copyright 2024 1Conan (@1Conan) <me@1conan.com>
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <string.h>
