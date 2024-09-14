@@ -4,7 +4,7 @@
 *A 65% keyboard sold by keychron*
 
 * K2 Keyboard Maintainer: [KeijoMika](https://github.com/KeijoMika) (based on work of dexter93 on a previous branch)
-* Ported to K6 by [mintyleaf](https://github.com/mintyleaf) 
+* Ported to K6 by [mintyleaf](https://github.com/mintyleaf)
 
 Layout by:
 [ANSI] [rus] (https://github.com/stdvar)
@@ -17,4 +17,9 @@ Make example for this keyboard (after setting up your build environment):
     make keychron/k6/rgb/v2/ansi:ansi
     make keychron/k6/rgb/v2/ansi:via
 
+Enabled in this version:
+* In this version the ESC key for MacOS is replaced by a Tapdance key. Single press gives the backtick and together with SHIFT the tilde, double tap is ESC.
+* Enabled Bluetooth
+* Enabled Bootmagic
+* Enabled VIA
 * * *
