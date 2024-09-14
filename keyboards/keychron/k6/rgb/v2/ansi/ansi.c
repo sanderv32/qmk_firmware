@@ -20,6 +20,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    include "iton_bt.h"
 #    include "outputselect.h"
 
+tap_dance_action_t tap_dance_actions[] = {
+    [TD_GRV_ESC] = ACTION_TAP_DANCE_DOUBLE(KC_GRV, KC_ESC),
+};
+
 uint32_t last_update_time = 0;
 
 uint32_t ev_connected     = 0;

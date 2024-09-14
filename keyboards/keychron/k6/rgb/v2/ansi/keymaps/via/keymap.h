@@ -24,6 +24,11 @@ enum layer_names {
     FN2,
 };
 
+enum {
+    TD_GRV_ESC,
+};
+
+
 #define KC_TASK LGUI(KC_TAB)       // Task viewer
 #define KC_FLXP LGUI(KC_E)         // Windows file explorer
 #define KC_MCTL KC_MISSION_CONTROL // Mission Control
