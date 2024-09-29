@@ -25,7 +25,7 @@ enum layer_names {
 };
 
 enum {
-    TD_GRV_ESC,
+    TD_LSFT_CAPS,
 };
 
 

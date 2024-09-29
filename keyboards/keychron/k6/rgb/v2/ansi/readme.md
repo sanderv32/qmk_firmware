@@ -18,7 +18,9 @@ Make example for this keyboard (after setting up your build environment):
     make keychron/k6/rgb/v2/ansi:via
 
 Enabled in this version:
-* In this version the ESC key for MacOS is replaced by a Tapdance key. Single press gives the backtick and together with SHIFT the tilde, double tap is ESC.
+* In this version the ESC key for MacOS is replaced by a the backtick and together with SHIFT the tilde
+* Capslock is the ESC key
+* Double tap left shift is now Capslock
 * Enabled Bluetooth
 * Enabled Bootmagic
 * Enabled VIA
